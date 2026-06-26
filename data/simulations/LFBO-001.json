@@ -1,0 +1,56 @@
+{
+  "id": "LFBO-001",
+  "titre": "Intégration VFR dans le circuit — Toulouse-Blagnac",
+  "centre": "LFBO",
+  "terrain": "LFBO",
+  "position": "Tour (TWR)",
+  "version": 2,
+  "date_creation": "2026-04-20T10:00:00",
+  "date_modification": "2026-05-18T16:30:00",
+  "duree_estimee_min": 9,
+  "difficulte": "Débutant",
+  "meteo": "CAVOK, vent 320/05kt, QNH 1020",
+  "attendus_pedagogiques": [
+    "Intégrer un VFR local dans un circuit avec trafic commercial IFR.",
+    "Gérer la priorité entre un départ IFR et un VFR en vent arrière.",
+    "Employer la phraséologie adaptée au trafic VFR."
+  ],
+  "evenements": [
+    {
+      "t": "10:05:00",
+      "acteur": "F-GKToulouse",
+      "type": "avion_message",
+      "frequence": "TWR 118.100",
+      "contenu": "Tour de Blagnac, F-GK, à la verticale terrain pour intégration, VFR local.",
+      "attendu": null,
+      "note_pedago": null
+    },
+    {
+      "t": "10:05:20",
+      "acteur": "Élève contrôleur",
+      "type": "eleve_instruction",
+      "frequence": "TWR 118.100",
+      "contenu": "F-GK, intégrez vent arrière main gauche piste 32L, rappelez en vent arrière.",
+      "attendu": "Intégrer le VFR dans le circuit avec une consigne de rappel claire.",
+      "note_pedago": "Vérifier l'usage du côté de circuit (main gauche) et la demande de rappel."
+    },
+    {
+      "t": "10:06:10",
+      "acteur": "AFR67BX",
+      "type": "avion_message",
+      "frequence": "TWR 118.100",
+      "contenu": "Tour, AFR67BX, prêt au départ 32L.",
+      "attendu": null,
+      "note_pedago": null
+    },
+    {
+      "t": "10:06:25",
+      "acteur": "Élève contrôleur",
+      "type": "eleve_instruction",
+      "frequence": "TWR 118.100",
+      "contenu": "AFR67BX, alignez 32L et attendez, trafic VFR en vent arrière.",
+      "attendu": "Différer le départ IFR pour assurer l'espacement avec le VFR intégré.",
+      "note_pedago": "Cœur de la simu : gérer la priorité IFR/VFR. L'élève doit retarder le départ sans bloquer la piste trop longtemps."
+    }
+  ]
+}

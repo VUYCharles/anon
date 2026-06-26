@@ -1,0 +1,43 @@
+{
+  "TKT-001": {
+    "id": "TKT-001",
+    "simulation_id": "LFPG-001",
+    "event_index": 8,
+    "type": "modification",
+    "titre": "Phraséologie remise de gaz à corriger",
+    "statut": "ouvert",
+    "auteur": "instructeur_cdg",
+    "auteur_nom": "Sophie Lambert",
+    "centre": "LFPG",
+    "date": "2026-05-15T11:20:00",
+    "contenu": "La formulation de la remise de gaz d'AFR1422 n'est pas conforme. L'avion devrait annoncer 'remise de gaz' avant de préciser ses intentions.",
+    "avant": "AFR1422, remise de gaz, je repars dans l'axe.",
+    "apres": "AFR1422, remise de gaz.",
+    "commentaires": [],
+    "resolution": null
+  },
+  "TKT-002": {
+    "id": "TKT-002",
+    "simulation_id": "LFPG-001",
+    "event_index": 0,
+    "type": "pedagogique",
+    "titre": "Ajouter un piège sur le QNH",
+    "statut": "en_cours",
+    "auteur": "instructeur_cdg",
+    "auteur_nom": "Sophie Lambert",
+    "centre": "LFPG",
+    "date": "2026-05-16T09:05:00",
+    "contenu": "Il serait pédagogiquement intéressant que le premier appareil annonce un QNH erroné pour tester la vigilance de l'élève.",
+    "avant": null,
+    "apres": null,
+    "commentaires": [
+      {
+        "auteur": "admin",
+        "auteur_nom": "Administration nationale",
+        "date": "2026-05-16T15:00:00",
+        "texte": "Bonne idée. Je regarde comment l'intégrer sans alourdir le scénario débutant."
+      }
+    ],
+    "resolution": null
+  }
+}

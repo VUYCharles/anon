@@ -1,0 +1,5 @@
+{
+  "LFPG": { "code": "LFPG", "nom": "Paris-Charles de Gaulle", "region": "Île-de-France" },
+  "LFBO": { "code": "LFBO", "nom": "Toulouse-Blagnac", "region": "Occitanie" },
+  "LFMN": { "code": "LFMN", "nom": "Nice-Côte d'Azur", "region": "PACA" }
+}

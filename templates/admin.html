@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Administration — ATC Log Manager{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Administration nationale</h1>
+  <div class="sub">Vue consolidée de tous les centres, des tickets et du journal des modifications.</div>
+</div>
+
+<div class="stat-grid">
+  {% for code, s in stats.items() %}
+  <div class="stat-card">
+    <div class="centre-code">{{ code }}</div>
+    <div class="centre-nom">{{ s.nom }}</div>
+    <div class="stat-line"><span>Simulations</span><b>{{ s.simulations }}</b></div>
+    <div class="stat-line"><span>Tickets ouverts</span><b>{{ s.tickets_ouverts }}</b></div>
+    <div class="stat-line"><span>Tickets au total</span><b>{{ s.tickets_total }}</b></div>
+  </div>
+  {% endfor %}
+</div>
+
+<h3 class="section-title">Simulations</h3>
+<table class="ticket-table">
+  <thead><tr><th>Réf.</th><th>Titre</th><th>Centre</th><th>Version</th><th></th></tr></thead>
+  <tbody>
+    {% for sim in simulations %}
+    <tr>
+      <td class="tk-id-cell">{{ sim.id }}</td>
+      <td>{{ sim.titre }}</td>
+      <td>{{ sim.centre }}</td>
+      <td class="mono">v{{ sim.version }}</td>
+      <td style="text-align:right;">
+        <a class="btn btn-sm" href="{{ url_for('simulation', sim_id=sim.id) }}">Voir</a>
+        <a class="btn btn-sm btn-primary" href="{{ url_for('admin_edit', sim_id=sim.id) }}">Éditer</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h3 class="section-title">Tickets récents</h3>
+<table class="ticket-table">
+  <thead><tr><th>Réf.</th><th>Titre</th><th>Centre</th><th>Statut</th></tr></thead>
+  <tbody>
+    {% for t in tickets[:8] %}
+    <tr onclick="location.href='{{ url_for('ticket_detail', ticket_id=t.id) }}'" style="cursor:pointer;">
+      <td class="tk-id-cell">{{ t.id }}</td>
+      <td>{{ t.titre }}</td>
+      <td>{{ t.centre }}</td>
+      <td><span class="statut statut-{{ t.statut }}">{{ STATUT_LABELS[t.statut] }}</span></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h3 class="section-title">Journal d'audit</h3>
+{% if audit %}
+<table class="audit-table">
+  <tbody>
+    {% for a in audit %}
+    <tr>
+      <td class="mono">{{ a.date|replace('T',' ') }}</td>
+      <td><b>{{ a.admin }}</b></td>
+      <td>{{ a.action }} sur <span class="mono">{{ a.simulation_id }}</span></td>
+      <td class="mono">v{{ a.version_avant }} → v{{ a.version_apres }}</td>
+      <td>{% if a.ticket_id %}<span class="mono">{{ a.ticket_id }}</span>{% endif %}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p style="color:var(--muted);font-size:14px;">Aucune modification enregistrée pour l'instant.</p>
+{% endif %}
+{% endblock %}

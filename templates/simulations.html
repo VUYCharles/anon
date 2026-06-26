@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Simulations — ATC Log Manager{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Simulations <span class="sub">{% if current_user.role == 'admin' %}· tous les centres{% else %}· {{ centres[current_user.centre].nom if current_user.centre in centres else current_user.centre }}{% endif %}</span></h1>
+  <div class="sub">
+    {% if current_user.role == 'pilote' %}Le déroulé des simulations de votre terrain.
+    {% elif current_user.role == 'instructeur' %}Déroulé, attendus pédagogiques et remontée de tickets.
+    {% else %}Toutes les simulations et leur édition.{% endif %}
+  </div>
+</div>
+
+{% if simulations %}
+<div class="sim-list">
+  {% for sim in simulations %}
+  <a class="sim-row" href="{{ url_for('simulation', sim_id=sim.id) }}">
+    <div class="sim-main">
+      <span class="sim-id">{{ sim.id }}</span>
+      <h3>{{ sim.titre }}</h3>
+      <div class="sim-meta">{{ sim.position }} · <span class="mono">{{ sim.terrain }}</span> · {{ sim.duree_estimee_min }} min · {{ sim.evenements|length }} événements · {{ sim.difficulte }}</div>
+    </div>
+    <div class="sim-aside">
+      {% if current_user.role in ['instructeur','admin'] and open_counts.get(sim.id) %}
+        <div class="tickets">{{ open_counts[sim.id] }} ticket(s)</div>
+      {% endif %}
+      <div>v{{ sim.version }}</div>
+    </div>
+    <span class="chev">›</span>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty">Aucune simulation disponible pour votre centre.</div>
+{% endif %}
+{% endblock %}

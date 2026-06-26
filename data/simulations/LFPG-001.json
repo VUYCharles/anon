@@ -1,0 +1,129 @@
+{
+  "id": "LFPG-001",
+  "titre": "Départ en heure de pointe — piste 27R",
+  "centre": "LFPG",
+  "terrain": "LFPG",
+  "position": "Tour (TWR)",
+  "version": 1,
+  "date_creation": "2026-05-12T09:00:00",
+  "date_modification": "2026-05-12T09:00:00",
+  "duree_estimee_min": 12,
+  "difficulte": "Intermédiaire",
+  "meteo": "CAVOK, vent 250/08kt, QNH 1018",
+  "attendus_pedagogiques": [
+    "Établir et tenir une séquence de départ de trois appareils sans perte de cadence.",
+    "Coordonner le transfert du premier départ avec l'Approche (LFPG APP) par téléphone.",
+    "Gérer une demande de remise de gaz fictive et réinsérer l'appareil dans la séquence.",
+    "Appliquer la phraséologie réglementaire pour les autorisations de décollage et de roulage."
+  ],
+  "evenements": [
+    {
+      "t": "12:02:02",
+      "acteur": "F-BVUH",
+      "type": "avion_message",
+      "frequence": "TWR 119.250",
+      "contenu": "Tour, F-BVUH, point d'attente Alpha, piste 27R, prêt au départ.",
+      "attendu": null,
+      "note_pedago": null
+    },
+    {
+      "t": "12:02:20",
+      "acteur": "Élève contrôleur",
+      "type": "eleve_instruction",
+      "frequence": "TWR 119.250",
+      "contenu": "F-BVUH, piste 27R, autorisé décollage, vent 250 degrés 8 noeuds.",
+      "attendu": "Délivrer l'autorisation de décollage avec rappel du vent. Vérifier l'absence de trafic en finale.",
+      "note_pedago": "Premier départ : vérifier que l'élève annonce bien le vent. Erreur fréquente : oubli du paramètre vent."
+    },
+    {
+      "t": "12:02:28",
+      "acteur": "F-BVUH",
+      "type": "avion_message",
+      "frequence": "TWR 119.250",
+      "contenu": "Autorisé décollage 27R, F-BVUH.",
+      "attendu": null,
+      "note_pedago": null
+    },
+    {
+      "t": "12:03:05",
+      "acteur": "F-BVUH",
+      "type": "avion_action",
+      "frequence": null,
+      "contenu": "Décollage 27R, début de montée dans l'axe.",
+      "attendu": null,
+      "note_pedago": null
+    },
+    {
+      "t": "12:03:40",
+      "acteur": "LFPG APP",
+      "type": "telephone_sortant",
+      "frequence": "Ligne directe APP",
+      "contenu": "Approche de la Tour, transfert F-BVUH dans l'axe 27R, en montée 4000 pieds.",
+      "attendu": "Coordonner par téléphone le transfert du départ vers l'Approche avant le passage en fréquence.",
+      "note_pedago": "Point clé de la simu : l'élève doit anticiper la coordination téléphonique AVANT de transférer l'avion en fréquence APP."
+    },
+    {
+      "t": "12:03:55",
+      "acteur": "DHL472",
+      "type": "avion_message",
+      "frequence": "TWR 119.250",
+      "contenu": "Tour, DHL472, point d'attente Alpha, prêt au départ.",
+      "attendu": null,
+      "note_pedago": null
+    },
+    {
+      "t": "12:04:10",
+      "acteur": "Élève contrôleur",
+      "type": "eleve_instruction",
+      "frequence": "TWR 119.250",
+      "contenu": "DHL472, alignez-vous et attendez piste 27R.",
+      "attendu": "Mettre le deuxième départ en position d'alignement pour maintenir la cadence sans autoriser le décollage immédiatement.",
+      "note_pedago": "Tester la gestion de cadence : l'élève doit aligner sans autoriser, le temps que le premier départ dégage."
+    },
+    {
+      "t": "12:04:45",
+      "acteur": "AFR1422",
+      "type": "avion_message",
+      "frequence": "TWR 119.250",
+      "contenu": "Tour, AFR1422, remise de gaz, je repars dans l'axe.",
+      "attendu": null,
+      "note_pedago": "Événement perturbateur injecté. Observer la réaction de l'élève à la remise de gaz imprévue."
+    },
+    {
+      "t": "12:05:02",
+      "acteur": "Élève contrôleur",
+      "type": "eleve_instruction",
+      "frequence": "TWR 119.250",
+      "contenu": "AFR1422, reçu, montez 4000 pieds, rappelez vent arrière main gauche 27R.",
+      "attendu": "Réinsérer l'appareil en remise de gaz dans le circuit et différer le décollage de DHL472.",
+      "note_pedago": "Cœur pédagogique : gérer la priorité de la remise de gaz tout en conservant la séquence au sol."
+    },
+    {
+      "t": "12:05:30",
+      "acteur": "DHL472",
+      "type": "avion_message",
+      "frequence": "TWR 119.250",
+      "contenu": "DHL472, toujours en attente alignés 27R.",
+      "attendu": null,
+      "note_pedago": null
+    },
+    {
+      "t": "12:06:00",
+      "acteur": "Élève contrôleur",
+      "type": "eleve_instruction",
+      "frequence": "TWR 119.250",
+      "contenu": "DHL472, piste 27R, autorisé décollage, vent 250 degrés 8 noeuds.",
+      "attendu": "Relancer la séquence de départ une fois le conflit avec la remise de gaz résolu.",
+      "note_pedago": "Fin de scénario : vérifier que la cadence est rétablie proprement."
+    },
+    {
+      "t": "12:06:35",
+      "acteur": "DHL472",
+      "type": "avion_action",
+      "frequence": null,
+      "contenu": "Décollage 27R.",
+      "attendu": null,
+      "note_pedago": null
+    }
+  ]
+}

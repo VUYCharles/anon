@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    image: atc-log-manager:latest
+    container_name: atc-log-manager
+    ports:
+      - "5000:5000"
+    environment:
+      # À CHANGER en production : clé secrète des sessions
+      SECRET_KEY: "changez-moi-en-production"
+    volumes:
+      # Persistance des données (simulations, tickets, audit) hors du conteneur
+      - ./data:/app/data
+    restart: unless-stopped

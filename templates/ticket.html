@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}{{ ticket.id }} — ATC Log Manager{% endblock %}
+{% block content %}
+<div class="breadcrumb"><a href="{{ url_for('tickets_list') }}">Tickets</a> / {{ ticket.id }}</div>
+
+<div class="ticket-detail-grid">
+  <div>
+    <div class="page-head">
+      <h1>{{ ticket.titre }}</h1>
+      <div class="sub">{{ TICKET_TYPE_LABELS[ticket.type] }} · <span class="statut statut-{{ ticket.statut }}">{{ STATUT_LABELS[ticket.statut] }}</span></div>
+    </div>
+
+    <div class="ticket-body">
+      <p style="margin-top:0;">{{ ticket.contenu }}</p>
+
+      {% if ticket.type == 'modification' and (ticket.avant or ticket.apres) %}
+      <div class="diff-box">
+        <div class="diff-col avant">
+          <h5>Avant</h5>
+          <div class="content">{{ ticket.avant or '—' }}</div>
+        </div>
+        <div class="diff-col apres">
+          <h5>Après (proposé)</h5>
+          <div class="content">{{ ticket.apres or '—' }}</div>
+        </div>
+      </div>
+      {% endif %}
+
+      {% if event %}
+      <div style="margin-top:14px;font-size:14px;color:var(--muted);">
+        Événement visé :
+        <a href="{{ url_for('simulation', sim_id=ticket.simulation_id) }}#ev-{{ ticket.event_index }}">{{ event.t }} · {{ event.acteur }}</a>
+        — « {{ event.contenu }} »
+      </div>
+      {% endif %}
+    </div>
+
+    <h3 class="section-title" style="margin-top:0;">Discussion</h3>
+    {% for c in ticket.commentaires %}
+    <div class="comment">
+      <div class="meta"><b>{{ c.auteur_nom }}</b> · <span class="date">{{ c.date|replace('T', ' ') }}</span></div>
+      <div>{{ c.texte }}</div>
+    </div>
+    {% else %}
+    <p style="color:var(--muted);font-size:14px;">Aucun commentaire pour l'instant.</p>
+    {% endfor %}
+
+    <form method="post" action="{{ url_for('ticket_commenter', ticket_id=ticket.id) }}" style="margin-top:18px;">
+      <div class="field">
+        <label for="texte">Ajouter un commentaire</label>
+        <textarea name="texte" id="texte" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-sm">Commenter</button>
+    </form>
+  </div>
+
+  <aside>
+    <div class="side-panel">
+      <h3>Informations</h3>
+      <div class="kv"><span class="k">Référence</span><span class="v code">{{ ticket.id }}</span></div>
+      <div class="kv"><span class="k">Simulation</span><span class="v code">{{ ticket.simulation_id }}</span></div>
+      <div class="kv"><span class="k">Centre</span><span class="v">{{ ticket.centre }}</span></div>
+      <div class="kv"><span class="k">Auteur</span><span class="v">{{ ticket.auteur_nom }}</span></div>
+      <div class="kv"><span class="k">Ouvert le</span><span class="v code" style="font-size:13px;">{{ ticket.date|replace('T',' ') }}</span></div>
+      {% if ticket.resolution %}<div class="kv"><span class="k">Résolution</span><span class="v">{{ ticket.resolution }}</span></div>{% endif %}
+    </div>
+
+    {% if current_user.role == 'admin' %}
+    <div class="side-panel side-block">
+      <h3>Traitement</h3>
+      <form method="post" action="{{ url_for('ticket_statut', ticket_id=ticket.id) }}">
+        <div class="field">
+          <label for="statut">Statut</label>
+          <select name="statut" id="statut">
+            {% for code, label in STATUT_LABELS.items() %}
+            <option value="{{ code }}" {{ 'selected' if ticket.statut == code }}>{{ label }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="field">
+          <label for="resolution">Note de résolution</label>
+          <textarea name="resolution" id="resolution">{{ ticket.resolution or '' }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-sm">Mettre à jour</button>
+      </form>
+      <a class="btn btn-sm btn-primary" style="margin-top:12px;display:inline-block;"
+         href="{{ url_for('admin_edit', sim_id=ticket.simulation_id, ticket=ticket.id) }}">Éditer la simulation →</a>
+    </div>
+    {% endif %}
+  </aside>
+</div>
+{% endblock %}

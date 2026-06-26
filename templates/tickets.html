@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Tickets — ATC Log Manager{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Tickets {% if current_user.role == 'admin' %}<span class="sub">· tous centres</span>{% else %}<span class="sub">· {{ current_user.centre }}</span>{% endif %}</h1>
+  <div class="sub">
+    {% if current_user.role == 'admin' %}Traitez les remontées des instructeurs et appliquez les modifications.
+    {% else %}Suivez l'état de vos remontées sur les simulations de votre centre.{% endif %}
+  </div>
+</div>
+
+<div class="filter-bar">
+  <a href="{{ url_for('tickets_list') }}" class="{{ 'active' if not statut_filter }}">Tous</a>
+  {% for code, label in STATUT_LABELS.items() %}
+  <a href="{{ url_for('tickets_list', statut=code) }}" class="{{ 'active' if statut_filter == code }}">{{ label }}</a>
+  {% endfor %}
+</div>
+
+{% if tickets %}
+<table class="ticket-table">
+  <thead>
+    <tr>
+      <th>Réf.</th><th>Titre</th><th>Type</th><th>Simulation</th>
+      {% if current_user.role == 'admin' %}<th>Centre</th>{% endif %}
+      <th>Auteur</th><th>Statut</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for t in tickets %}
+    <tr onclick="location.href='{{ url_for('ticket_detail', ticket_id=t.id) }}'" style="cursor:pointer;">
+      <td class="tk-id-cell">{{ t.id }}</td>
+      <td>{{ t.titre }}</td>
+      <td><span class="tk-type">{{ TICKET_TYPE_LABELS[t.type] }}</span></td>
+      <td class="tk-id-cell">{{ t.simulation_id }}</td>
+      {% if current_user.role == 'admin' %}<td>{{ t.centre }}</td>{% endif %}
+      <td>{{ t.auteur_nom }}</td>
+      <td><span class="statut statut-{{ t.statut }}">{{ STATUT_LABELS[t.statut] }}</span></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="empty">Aucun ticket{% if statut_filter %} avec ce statut{% endif %}.</div>
+{% endif %}
+{% endblock %}

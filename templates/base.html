@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Logs de simulation ATC{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+{% if current_user %}
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="{{ url_for('index') }}" class="brand">
+      <span class="name">ATC Log Manager</span>
+    </a>
+    <nav class="topnav">
+      <a href="{{ url_for('index') }}" class="{{ 'active' if request.endpoint == 'index' }}">Simulations</a>
+      {% if current_user.role in ['instructeur', 'admin'] %}
+      <a href="{{ url_for('tickets_list') }}" class="{{ 'active' if request.endpoint in ['tickets_list', 'ticket_detail'] }}">Tickets</a>
+      {% endif %}
+      {% if current_user.role == 'admin' %}
+      <a href="{{ url_for('admin_dashboard') }}" class="{{ 'active' if request.endpoint in ['admin_dashboard', 'admin_edit'] }}">Administration</a>
+      {% endif %}
+    </nav>
+    <div class="user-chip">
+      <span class="who">{{ current_user.nom }}</span>
+      <span class="sep">·</span>
+      <span>{{ current_user.role }}{% if current_user.centre %} {{ current_user.centre }}{% endif %}</span>
+      <span class="sep">·</span>
+      <a href="{{ url_for('logout') }}">Déconnexion</a>
+    </div>
+  </div>
+</header>
+{% endif %}
+
+<main class="{{ 'login-wrap' if request.endpoint == 'login' else 'container' }}">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-area">
+      {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+      {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+{% block scripts %}{% endblock %}
+</body>
+</html>

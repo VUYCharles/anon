@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% block title %}{{ sim.titre }} — ATC Log Manager{% endblock %}
+{% block content %}
+<div class="breadcrumb"><a href="{{ url_for('index') }}">Simulations</a> / {{ sim.id }}</div>
+
+<div class="sim-banner">
+  <span class="sim-id">{{ sim.id }}</span>
+  <h1>{{ sim.titre }}</h1>
+  <div class="banner-meta">
+    <span>{{ sim.position }} · {{ sim.terrain }}</span>
+    <span>Durée {{ sim.duree_estimee_min }} min</span>
+    <span>Difficulté <b>{{ sim.difficulte }}</b></span>
+    <span>Version {{ sim.version }}</span>
+    {% if sim.meteo %}<span class="meteo">{{ sim.meteo }}</span>{% endif %}
+  </div>
+</div>
+
+{% if current_user.role in ['instructeur', 'admin'] and sim.attendus_pedagogiques %}
+<div class="pedago-block">
+  <h2>Attendus pédagogiques</h2>
+  <ul>
+    {% for a in sim.attendus_pedagogiques %}<li>{{ a }}</li>{% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+<div class="log-head">
+  <h2>Déroulé de la simulation</h2>
+  <div class="log-legend">
+    <span><span class="dot" style="background:var(--ink)"></span>Avion</span>
+    <span><span class="dot" style="background:var(--accent)"></span>Élève contrôleur</span>
+    <span><span class="dot" style="background:var(--amber)"></span>Téléphone</span>
+  </div>
+</div>
+
+<div class="log">
+  <div class="log-thead">
+    <div>Heure</div>
+    <div>Acteur</div>
+    <div>Communication</div>
+  </div>
+  {% for ev in sim.evenements %}
+  <div class="log-row t-{{ ev.type }}" id="ev-{{ loop.index0 }}">
+    <div class="log-time">{{ ev.t }}</div>
+    <div class="log-actor">
+      <div class="log-actor-name">{{ ev.acteur }}</div>
+      {% if ev.frequence %}<div class="log-freq">{{ ev.frequence }}</div>{% endif %}
+    </div>
+    <div class="log-body">
+      <div>{{ ev.contenu }}</div>
+
+      {% if current_user.role in ['instructeur', 'admin'] %}
+        {% if ev.attendu %}<div class="attendu"><b>Attendu :</b> {{ ev.attendu }}</div>{% endif %}
+        {% if ev.note_pedago %}<div class="note-pedago">{{ ev.note_pedago }}</div>{% endif %}
+
+        {% if sim_tickets.get(loop.index0) %}
+        <div class="ev-tickets">
+          {% for t in sim_tickets[loop.index0] %}
+          <a class="ev-ticket" href="{{ url_for('ticket_detail', ticket_id=t.id) }}">
+            <span class="tk-id">{{ t.id }}</span>
+            <span class="statut statut-{{ t.statut }}">{{ STATUT_LABELS[t.statut] }}</span>
+            <span>{{ t.titre }}</span>
+          </a>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if current_user.role == 'instructeur' %}
+        <div class="ev-action">
+          <button class="btn-ticket"
+                  onclick="openTicket({{ loop.index0 }}, '{{ ev.t }}', '{{ ev.acteur|replace("'", "\\'") }}')">
+            + Remonter un ticket sur cet événement
+          </button>
+        </div>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% if current_user.role == 'instructeur' %}
+<div class="modal-overlay" id="ticket-modal">
+  <div class="modal">
+    <h3>Nouveau ticket</h3>
+    <div class="modal-sub" id="ticket-context"></div>
+    <form method="post" action="{{ url_for('ticket_nouveau') }}">
+      <input type="hidden" name="simulation_id" value="{{ sim.id }}">
+      <input type="hidden" name="event_index" id="modal-event-index">
+      <div class="field">
+        <label for="tk-type">Type de ticket</label>
+        <select name="type" id="tk-type" onchange="toggleDiff()">
+          <option value="signalement">Signalement (bug, incohérence)</option>
+          <option value="modification">Proposition de modification</option>
+          <option value="pedagogique">Point pédagogique</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="tk-titre">Titre</label>
+        <input type="text" name="titre" id="tk-titre" required placeholder="Résumé court du point soulevé">
+      </div>
+      <div class="field">
+        <label for="tk-contenu">Description</label>
+        <textarea name="contenu" id="tk-contenu" required placeholder="Décrivez le problème ou la proposition"></textarea>
+      </div>
+      <div id="diff-fields" style="display:none;">
+        <div class="field">
+          <label for="tk-avant">Formulation actuelle (avant)</label>
+          <textarea name="avant" id="tk-avant" placeholder="Texte actuel de l'événement"></textarea>
+        </div>
+        <div class="field">
+          <label for="tk-apres">Formulation proposée (après)</label>
+          <textarea name="apres" id="tk-apres" placeholder="Texte proposé"></textarea>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn" onclick="closeTicket()">Annuler</button>
+        <button type="submit" class="btn btn-primary">Créer le ticket</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{% if current_user.role == 'instructeur' %}
+<script>
+function openTicket(index, t, acteur) {
+  document.getElementById('modal-event-index').value = index;
+  document.getElementById('ticket-context').textContent =
+    'Événement #' + index + ' · ' + t + ' · ' + acteur;
+  document.getElementById('ticket-modal').classList.add('open');
+}
+function closeTicket() {
+  document.getElementById('ticket-modal').classList.remove('open');
+}
+function toggleDiff() {
+  var type = document.getElementById('tk-type').value;
+  document.getElementById('diff-fields').style.display =
+    (type === 'modification') ? 'block' : 'none';
+}
+document.getElementById('ticket-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeTicket();
+});
+</script>
+{% endif %}
+{% endblock %}

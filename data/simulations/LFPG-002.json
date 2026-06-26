@@ -1,0 +1,74 @@
+{
+  "id": "LFPG-002",
+  "titre": "Arrivées multiples par mauvaise visibilité",
+  "centre": "LFPG",
+  "terrain": "LFPG",
+  "position": "Tour (TWR)",
+  "version": 1,
+  "date_creation": "2026-05-14T14:00:00",
+  "date_modification": "2026-05-14T14:00:00",
+  "duree_estimee_min": 10,
+  "difficulte": "Avancé",
+  "meteo": "Visibilité 1200m, plafond 200ft, QNH 1012, procédures LVP actives",
+  "attendus_pedagogiques": [
+    "Appliquer les procédures par faible visibilité (LVP) à l'arrivée.",
+    "Espacer correctement deux arrivées successives en finale.",
+    "Coordonner la sortie de piste avec le contrôle sol."
+  ],
+  "evenements": [
+    {
+      "t": "14:10:00",
+      "acteur": "EZY88GH",
+      "type": "avion_message",
+      "frequence": "TWR 119.250",
+      "contenu": "Tour, EZY88GH, finale 27R, établi ILS.",
+      "attendu": null,
+      "note_pedago": null
+    },
+    {
+      "t": "14:10:15",
+      "acteur": "Élève contrôleur",
+      "type": "eleve_instruction",
+      "frequence": "TWR 119.250",
+      "contenu": "EZY88GH, piste 27R, autorisé atterrissage, vent calme, RVR 1200 mètres.",
+      "attendu": "Délivrer l'autorisation d'atterrissage en mentionnant la RVR (procédure LVP).",
+      "note_pedago": "Vérifier l'annonce de la RVR, obligatoire en conditions LVP. Erreur classique : oubli de la RVR."
+    },
+    {
+      "t": "14:11:30",
+      "acteur": "BAW302",
+      "type": "avion_message",
+      "frequence": "TWR 119.250",
+      "contenu": "Tour, BAW302, finale 27R derrière le précédent.",
+      "attendu": null,
+      "note_pedago": null
+    },
+    {
+      "t": "14:11:45",
+      "acteur": "Élève contrôleur",
+      "type": "eleve_instruction",
+      "frequence": "TWR 119.250",
+      "contenu": "BAW302, numéro 2, rappelez piste dégagée par le trafic précédent.",
+      "attendu": "Différer l'autorisation tant que la piste n'est pas dégagée, en informant le numéro 2.",
+      "note_pedago": "Point critique : en LVP l'espacement est renforcé. Ne pas autoriser tant que le premier n'a pas confirmé piste dégagée."
+    },
+    {
+      "t": "14:12:20",
+      "acteur": "EZY88GH",
+      "type": "avion_action",
+      "frequence": null,
+      "contenu": "Atterrissage 27R, dégage par bretelle November.",
+      "attendu": null,
+      "note_pedago": null
+    },
+    {
+      "t": "14:12:35",
+      "acteur": "LFPG SOL",
+      "type": "telephone_sortant",
+      "frequence": "Ligne directe SOL",
+      "contenu": "Sol de la Tour, EZY88GH dégage November, je vous le transfère.",
+      "attendu": "Coordonner avec le sol le transfert de l'arrivée après dégagement de piste.",
+      "note_pedago": null
+    }
+  ]
+}

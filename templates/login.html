@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Connexion — ATC Log Manager{% endblock %}
+{% block content %}
+<div class="login-card">
+  <h1 class="name-big">ATC Log Manager</h1>
+  <p class="lead">Logs de simulation de contrôle aérien.</p>
+
+  <form method="post" action="{{ url_for('login') }}{% if request.args.get('next') %}?next={{ request.args.get('next') }}{% endif %}">
+    <div class="field">
+      <label for="username">Identifiant</label>
+      <input type="text" id="username" name="username" autocomplete="username" autofocus required>
+    </div>
+    <div class="field">
+      <label for="password">Mot de passe</label>
+      <input type="password" id="password" name="password" autocomplete="current-password" required>
+    </div>
+    <button type="submit" class="btn btn-primary" style="width:100%;">Se connecter</button>
+  </form>
+
+  <div class="demo-accounts">
+    <h4>Comptes de démonstration · mot de passe « demo »</h4>
+    {% for username, u in users.items() %}
+    <div class="demo-row" onclick="fill('{{ username }}')">
+      <span class="u">{{ username }}</span>
+      <span class="r">{{ u.role }}{% if u.centre %} · {{ u.centre }}{% endif %}</span>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+function fill(u) {
+  document.getElementById('username').value = u;
+  document.getElementById('password').value = 'demo';
+  document.getElementById('password').focus();
+}
+</script>
+{% endblock %}

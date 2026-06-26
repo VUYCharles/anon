@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Éditer {{ sim_id }} — ATC Log Manager{% endblock %}
+{% block content %}
+<div class="breadcrumb"><a href="{{ url_for('admin_dashboard') }}">Administration</a> / Éditer {{ sim_id }}</div>
+
+<div class="page-head">
+  <h1>Éditer la simulation {{ sim_id }}</h1>
+  <div class="sub">Modification directe du JSON de log. La version précédente est sauvegardée automatiquement.</div>
+</div>
+
+<div class="editor-warn">
+  À l'enregistrement : la version est incrémentée, une sauvegarde <code>.bak</code> de la version actuelle est conservée,
+  et l'opération est tracée dans le journal d'audit.
+  {% if ticket_id %} Cette édition est liée au ticket <b>{{ ticket_id }}</b>, qui sera marqué « résolu ».{% endif %}
+</div>
+
+<form method="post" action="{{ url_for('admin_edit', sim_id=sim_id) }}" onsubmit="return validateJson()">
+  {% if ticket_id %}<input type="hidden" name="ticket_id" value="{{ ticket_id }}">{% endif %}
+  <textarea class="json-editor" name="contenu_json" id="editor" spellcheck="false">{{ contenu_json }}</textarea>
+  <div id="json-error" style="display:none;color:var(--red);font-size:13px;margin-top:8px;"></div>
+  <div style="margin-top:16px;display:flex;gap:10px;">
+    <button type="submit" class="btn btn-primary">Enregistrer la nouvelle version</button>
+    <a href="{{ url_for('admin_dashboard') }}" class="btn">Annuler</a>
+  </div>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function validateJson() {
+  var raw = document.getElementById('editor').value;
+  var errBox = document.getElementById('json-error');
+  try {
+    JSON.parse(raw);
+    errBox.style.display = 'none';
+    return true;
+  } catch (e) {
+    errBox.textContent = 'JSON invalide : ' + e.message;
+    errBox.style.display = 'block';
+    return false;
+  }
+}
+</script>
+{% endblock %}
