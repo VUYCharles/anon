@@ -1,10 +1,10 @@
 services:
   app:
     build: .
-    image: atc-log-manager:latest
-    container_name: atc-log-manager
+    image: simlog:latest
+    container_name: simlog
     ports:
-      - "5000:5000"
+      - "8080:5000"
     environment:
       # À CHANGER en production : clé secrète des sessions
       SECRET_KEY: "changez-moi-en-production"

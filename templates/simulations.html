@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Simulations — Simlog{% endblock %}
+{% block title %}Simulations — ATC Log Manager{% endblock %}
 {% block content %}
 <div class="page-head">
   <h1>Simulations <span class="sub">{% if current_user.role == 'admin' %}· tous les centres{% else %}· {{ centres[current_user.centre].nom if current_user.centre in centres else current_user.centre }}{% endif %}</span></h1>
