@@ -1,4 +1,4 @@
-# ATC Log Manager — Gestionnaire de logs de simulation de contrôle aérien
+# Simlog — Gestionnaire de logs de simulation de contrôle aérien
 
 Prototype fonctionnel d'une webapp de gestion des logs de simulations
 de contrôle aérien. La **visualisation** des logs existe déjà côté simulateurs ;

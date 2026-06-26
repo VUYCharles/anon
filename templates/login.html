@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% block title %}Connexion — ATC Log Manager{% endblock %}
+{% block title %}Connexion — Simlog{% endblock %}
 {% block content %}
 <div class="login-card">
-  <h1 class="name-big">ATC Log Manager</h1>
+  <h1 class="name-big">Simlog</h1>
   <p class="lead">Logs de simulation de contrôle aérien.</p>
 
   <form method="post" action="{{ url_for('login') }}{% if request.args.get('next') %}?next={{ request.args.get('next') }}{% endif %}">
