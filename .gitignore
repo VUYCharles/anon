@@ -1,0 +1,9 @@
+# Données générées et secrets — ne jamais committer
+*.key
+*.pub
+*.conf
+data/*.tmp
+data/simulations/*.bak.json
+__pycache__/
+*.pyc
+.env
