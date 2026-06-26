@@ -1,32 +1,12 @@
 {
-  "pilote_cdg": {
-    "nom": "Julien Mercier",
-    "role": "pilote",
-    "centre": "LFPG",
+  "LFPG": {
     "password": "demo"
   },
-  "instructeur_cdg": {
-    "nom": "Sophie Lambert",
-    "role": "instructeur",
-    "centre": "LFPG",
-    "password": "demo"
-  },
-  "pilote_tls": {
-    "nom": "Marc Aubert",
-    "role": "pilote",
-    "centre": "LFBO",
-    "password": "demo"
-  },
-  "instructeur_tls": {
-    "nom": "Claire Fontaine",
-    "role": "instructeur",
-    "centre": "LFBO",
+  "LFBO": {
     "password": "demo"
   },
   "admin": {
-    "nom": "Administration nationale",
     "role": "admin",
-    "centre": null,
     "password": "demo"
   }
 }

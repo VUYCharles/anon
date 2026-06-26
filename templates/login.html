@@ -7,8 +7,9 @@
 
   <form method="post" action="{{ url_for('login') }}{% if request.args.get('next') %}?next={{ request.args.get('next') }}{% endif %}">
     <div class="field">
-      <label for="username">Identifiant</label>
-      <input type="text" id="username" name="username" autocomplete="username" autofocus required>
+      <label for="username">Code aéroport</label>
+      <input type="text" id="username" name="username" autocomplete="username"
+             placeholder="LFPG, LFBO…" autofocus required>
     </div>
     <div class="field">
       <label for="password">Mot de passe</label>
@@ -18,13 +19,19 @@
   </form>
 
   <div class="demo-accounts">
-    <h4>Comptes de démonstration · mot de passe « demo »</h4>
-    {% for username, u in users.items() %}
-    <div class="demo-row" onclick="fill('{{ username }}')">
-      <span class="u">{{ username }}</span>
-      <span class="r">{{ u.role }}{% if u.centre %} · {{ u.centre }}{% endif %}</span>
-    </div>
+    <h4>Accès de démonstration · mot de passe « demo »</h4>
+    {% for code, u in users.items() %}
+      {% if code != 'admin' %}
+      <div class="demo-row" onclick="fill('{{ code }}')">
+        <span class="u">{{ code }}</span>
+        <span class="r">{{ centres[code].nom if code in centres else '' }}</span>
+      </div>
+      {% endif %}
     {% endfor %}
+    <div class="demo-row" onclick="fill('admin')">
+      <span class="u">admin</span>
+      <span class="r">administration · tous les centres</span>
+    </div>
   </div>
 </div>
 {% endblock %}

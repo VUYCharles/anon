@@ -11,7 +11,7 @@
 <header class="topbar">
   <div class="topbar-inner">
     <a href="{{ url_for('index') }}" class="brand">
-      <span class="name">Simlog</span>
+      <span class="name">ATC Log Manager</span>
     </a>
     <nav class="topnav">
       <a href="{{ url_for('index') }}" class="{{ 'active' if request.endpoint == 'index' }}">Simulations</a>
@@ -33,7 +33,7 @@
 </header>
 {% endif %}
 
-<main class="{{ 'login-wrap' if request.endpoint == 'login' else 'container' }}">
+<main class="{{ 'login-wrap' if request.endpoint in ['login', 'choisir_role'] else 'container' }}">
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       <div class="flash-area">

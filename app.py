@@ -23,7 +23,6 @@ SIM_DIR = os.path.join(DATA_DIR, "simulations")
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-a-changer-en-production")
 
-# Verrou simple pour les écritures concurrentes sur les fichiers JSON.
 _write_lock = Lock()
 
 
@@ -49,30 +48,23 @@ def _save(path, data):
 def load_centres():
     return _load(os.path.join(DATA_DIR, "centres.json"), {})
 
-
 def load_users():
     return _load(os.path.join(DATA_DIR, "users.json"), {})
-
 
 def save_users(users):
     _save(os.path.join(DATA_DIR, "users.json"), users)
 
-
 def load_tickets():
     return _load(os.path.join(DATA_DIR, "tickets.json"), {})
-
 
 def save_tickets(tickets):
     _save(os.path.join(DATA_DIR, "tickets.json"), tickets)
 
-
 def load_audit():
     return _load(os.path.join(DATA_DIR, "audit.json"), [])
 
-
 def save_audit(audit):
     _save(os.path.join(DATA_DIR, "audit.json"), audit)
-
 
 def load_simulation(sim_id):
     path = os.path.join(SIM_DIR, f"{sim_id}.json")
@@ -80,10 +72,8 @@ def load_simulation(sim_id):
         return None
     return _load(path)
 
-
 def save_simulation(sim_id, data):
     _save(os.path.join(SIM_DIR, f"{sim_id}.json"), data)
-
 
 def list_simulations():
     sims = []
@@ -96,9 +86,6 @@ def list_simulations():
 
 # ---------------------------------------------------------------------------
 # Hachage des mots de passe au démarrage
-# Les comptes du fichier users.json peuvent contenir un champ "password" en
-# clair (pratique pour ajouter un utilisateur). Au boot, on le convertit en
-# "password_hash" et on retire le clair.
 # ---------------------------------------------------------------------------
 def hash_seed_passwords():
     users = load_users()
@@ -110,7 +97,6 @@ def hash_seed_passwords():
     if changed:
         save_users(users)
 
-
 hash_seed_passwords()
 
 
@@ -118,20 +104,32 @@ hash_seed_passwords()
 # Authentification et contrôle d'accès
 # ---------------------------------------------------------------------------
 def current_user():
-    username = session.get("username")
-    if not username:
+    """
+    Nouveau système : un compte par aéroport.
+    La session stocke 'centre' (code OACI) et 'role' (pilote/instructeur/admin).
+    Le rôle est choisi après la connexion via /choisir-role.
+    """
+    role = session.get("role")
+    if not role:
         return None
-    users = load_users()
-    u = users.get(username)
-    if not u:
+    if role == "admin":
+        return {"username": "admin", "nom": "Administration", "role": "admin", "centre": None}
+    centre = session.get("centre")
+    if not centre:
         return None
-    return {"username": username, **u}
+    centres = load_centres()
+    nom = centres.get(centre, {}).get("nom", centre)
+    return {"username": centre, "nom": nom, "role": role, "centre": centre}
 
 
 def login_required(view):
     @wraps(view)
     def wrapped(*args, **kwargs):
-        if not current_user():
+        role = session.get("role")
+        if not role:
+            # Connecté à un aéroport mais rôle pas encore choisi
+            if session.get("centre"):
+                return redirect(url_for("choisir_role"))
             return redirect(url_for("login", next=request.path))
         return view(*args, **kwargs)
     return wrapped
@@ -152,18 +150,12 @@ def role_required(*roles):
 
 
 def can_access_simulation(user, sim):
-    """Isolation par centre : l'admin voit tout, les autres uniquement leur centre."""
     if user["role"] == "admin":
         return True
     return sim.get("centre") == user.get("centre")
 
 
 def filter_simulation_for_role(sim, role):
-    """
-    Filtrage serveur des données sensibles.
-    Le profil pilote ne reçoit JAMAIS les attendus pédagogiques ni les notes
-    pédagogiques — ils sont retirés avant l'envoi au template.
-    """
     if role in ("instructeur", "admin"):
         return sim
     clean = dict(sim)
@@ -185,7 +177,6 @@ def inject_globals():
     }
 
 
-# Libellés lisibles pour les types d'événements et de tickets.
 TYPE_LABELS = {
     "avion_message": "Message avion",
     "avion_action": "Action avion",
@@ -216,19 +207,45 @@ app.jinja_env.globals["STATUT_LABELS"] = STATUT_LABELS
 # ---------------------------------------------------------------------------
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == "POST":
-        username = request.form.get("username", "").strip()
-        password = request.form.get("password", "")
-        users = load_users()
-        u = users.get(username)
-        if u and check_password_hash(u.get("password_hash", ""), password):
-            session["username"] = username
-            nxt = request.args.get("next") or url_for("index")
-            return redirect(nxt)
-        flash("Identifiant ou mot de passe incorrect.", "error")
     if current_user():
         return redirect(url_for("index"))
-    return render_template("login.html", users=load_users())
+    if request.method == "POST":
+        identifier = request.form.get("username", "").strip().upper()
+        if identifier == "ADMIN":
+            identifier = "admin"
+        password = request.form.get("password", "")
+        users = load_users()
+        u = users.get(identifier)
+        if u and check_password_hash(u.get("password_hash", ""), password):
+            if u.get("role") == "admin":
+                # Admin : rôle déjà connu, on va directement à l'app
+                session.clear()
+                session["role"] = "admin"
+                session["centre"] = None
+                return redirect(url_for("index"))
+            else:
+                # Aéroport : rôle à choisir
+                session.clear()
+                session["centre"] = identifier
+                return redirect(url_for("choisir_role"))
+        flash("Code aéroport ou mot de passe incorrect.", "error")
+    return render_template("login.html", users=load_users(), centres=load_centres())
+
+
+@app.route("/choisir-role", methods=["GET", "POST"])
+def choisir_role():
+    if not session.get("centre"):
+        return redirect(url_for("login"))
+    if session.get("role"):
+        return redirect(url_for("index"))
+    if request.method == "POST":
+        role = request.form.get("role")
+        if role in ("pilote", "instructeur"):
+            session["role"] = role
+            return redirect(url_for("index"))
+    centres = load_centres()
+    centre_nom = centres.get(session["centre"], {}).get("nom", session["centre"])
+    return render_template("choisir_role.html", centre_nom=centre_nom, centre_code=session["centre"])
 
 
 @app.route("/logout")
@@ -246,7 +263,6 @@ def index():
     user = current_user()
     sims = [s for s in list_simulations() if can_access_simulation(user, s)]
     tickets = load_tickets()
-    # Nombre de tickets ouverts par simulation (visible instructeur/admin).
     open_counts = {}
     for t in tickets.values():
         if t["statut"] in ("ouvert", "en_cours"):
@@ -267,17 +283,12 @@ def simulation(sim_id):
     if not can_access_simulation(user, sim):
         abort(403)
     filtered = filter_simulation_for_role(sim, user["role"])
-    # Tickets attachés (instructeur/admin uniquement).
     sim_tickets = {}
     if user["role"] in ("instructeur", "admin"):
         for t in load_tickets().values():
             if t["simulation_id"] == sim_id:
                 sim_tickets.setdefault(t["event_index"], []).append(t)
-    return render_template(
-        "simulation.html",
-        sim=filtered,
-        sim_tickets=sim_tickets,
-    )
+    return render_template("simulation.html", sim=filtered, sim_tickets=sim_tickets)
 
 
 # ---------------------------------------------------------------------------
@@ -305,7 +316,7 @@ def ticket_nouveau():
         "titre": request.form.get("titre", "").strip() or "(sans titre)",
         "statut": "ouvert",
         "auteur": user["username"],
-        "auteur_nom": user["nom"],
+        "auteur_nom": f"{user['nom']} ({user['role']})",
         "centre": sim.get("centre"),
         "date": datetime.now().isoformat(timespec="seconds"),
         "contenu": request.form.get("contenu", "").strip(),
@@ -329,7 +340,7 @@ def tickets_list():
     all_tickets = load_tickets()
     if user["role"] == "admin":
         visible = list(all_tickets.values())
-    else:  # instructeur : tickets de son centre
+    else:
         visible = [t for t in all_tickets.values() if t["centre"] == user["centre"]]
     statut_filter = request.args.get("statut")
     if statut_filter:
@@ -373,7 +384,7 @@ def ticket_commenter(ticket_id):
     if texte:
         ticket["commentaires"].append({
             "auteur": user["username"],
-            "auteur_nom": user["nom"],
+            "auteur_nom": f"{user['nom']} ({user['role']})",
             "date": datetime.now().isoformat(timespec="seconds"),
             "texte": texte,
         })
@@ -442,7 +453,6 @@ def admin_edit(sim_id):
             flash(f"JSON invalide : {e}", "error")
             return render_template("admin_edit.html", sim_id=sim_id,
                                    contenu_json=raw, ticket_id=ticket_id)
-        # Sauvegarde versionnée : on conserve la version N-1.
         old_version = sim.get("version", 1)
         new_data["version"] = old_version + 1
         new_data["date_modification"] = datetime.now().isoformat(timespec="seconds")
@@ -450,7 +460,6 @@ def admin_edit(sim_id):
         _save(backup_path, sim)
         save_simulation(sim_id, new_data)
 
-        # Journal d'audit.
         audit = load_audit()
         audit.append({
             "date": datetime.now().isoformat(timespec="seconds"),
@@ -463,7 +472,6 @@ def admin_edit(sim_id):
         })
         save_audit(audit)
 
-        # Si lié à un ticket, on le marque résolu.
         linked = request.form.get("ticket_id")
         if linked:
             tickets = load_tickets()
@@ -483,7 +491,7 @@ def admin_edit(sim_id):
 @app.errorhandler(403)
 def forbidden(e):
     return render_template("error.html", code=403,
-                           message="Accès refusé. Ce contenu ne relève pas de votre profil ou de votre centre."), 403
+                           message="Accès refusé."), 403
 
 
 @app.errorhandler(404)

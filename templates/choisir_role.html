@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Choisir un rôle — Simlog{% endblock %}
+{% block content %}
+<div class="login-card">
+  <h1 class="name-big">{{ centre_nom }}</h1>
+  <p class="lead">Connecté en tant que <strong>{{ centre_code }}</strong>. Choisissez votre rôle pour cette session.</p>
+
+  <form method="post" action="{{ url_for('choisir_role') }}">
+    <div style="display:flex; gap:1rem; margin-top:1.5rem;">
+      <button type="submit" name="role" value="pilote"
+              class="btn btn-primary" style="flex:1; padding:1.2rem 0; font-size:1rem;">
+        Pilote
+        <small style="display:block; font-weight:normal; font-size:0.8rem; margin-top:0.3rem; opacity:0.85;">
+          Déroulé radio uniquement
+        </small>
+      </button>
+      <button type="submit" name="role" value="instructeur"
+              class="btn btn-primary" style="flex:1; padding:1.2rem 0; font-size:1rem;">
+        Instructeur
+        <small style="display:block; font-weight:normal; font-size:0.8rem; margin-top:0.3rem; opacity:0.85;">
+          Attendus pédago + tickets
+        </small>
+      </button>
+    </div>
+  </form>
+
+  <div style="margin-top:1.5rem; text-align:center;">
+    <a href="{{ url_for('logout') }}" style="font-size:0.85rem; color:#888;">← Changer d'aéroport</a>
+  </div>
+</div>
+{% endblock %}
