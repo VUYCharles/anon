@@ -1,8 +1,10 @@
 /* =========================================================================
-   ATC Log Manager — feuille de style
+   Simlog — feuille de style
    Sobre, professionnel, institutionnel. Polices système (hors-ligne).
-   Pas de chasse fixe sauf pour l'édition de code JSON. Chiffres tabulaires
-   pour l'alignement des heures et identifiants.
+   Thème clair + sombre automatique (suit le réglage du système).
+   Optimisé pour mobile, tablette et desktop.
+
+   Code by @VUYCharles
    ========================================================================= */
 
 :root {
@@ -24,6 +26,39 @@
   --radius: 7px;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  /* couleurs ponctuelles (surchargées en thème sombre) */
+  --flash-ok-bg: #eef5f1;   --flash-ok-ink: #1f5d40;
+  --flash-err-bg: #f7e9e9;  --flash-err-ink: #8f2a2a;
+  --target-bg: #fdf7e6;
+  --accent-hover: #095a93;
+}
+
+/* ---- Thème sombre automatique (suit le système) ---- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15171a;
+    --panel: #1b1e22;
+    --panel-2: #23272c;
+    --ink: #e6e8ea;
+    --muted: #9aa0a8;
+    --faint: #6a7077;
+    --line: #2b2f35;
+    --line-strong: #3b4046;
+
+    --accent: #4ea8e0;
+    --accent-soft: #16242e;
+    --accent-hover: #6cbcef;
+    --green: #5aa882;
+    --amber: #c89a4a;
+    --red: #d77272;
+
+    --flash-ok-bg: #15281f;   --flash-ok-ink: #7cc6a0;
+    --flash-err-bg: #2c1818;  --flash-err-ink: #e09a9a;
+    --target-bg: #2c2718;
+  }
+  /* L'éditeur JSON garde un contraste correct en sombre */
+  .json-editor { color: var(--ink); }
 }
 
 * { box-sizing: border-box; }
@@ -87,8 +122,8 @@ a:hover { text-decoration: underline; }
 
 /* ---- Flash ---- */
 .flash { padding: 11px 16px; border-radius: var(--radius); margin-bottom: 18px; font-size: 14px; }
-.flash-success { background: #eef5f1; color: #1f5d40; }
-.flash-error { background: #f7e9e9; color: #8f2a2a; }
+.flash-success { background: var(--flash-ok-bg); color: var(--flash-ok-ink); }
+.flash-error { background: var(--flash-err-bg); color: var(--flash-err-ink); }
 
 /* ---- Liste de simulations ---- */
 .sim-list { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
@@ -154,7 +189,7 @@ a:hover { text-decoration: underline; }
   align-items: baseline;
 }
 .log-row:last-child { border-bottom: none; }
-.log-row:target { background: #fdf7e6; }
+.log-row:target { background: var(--target-bg); }
 .log-time { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .log-actor-name { font-size: 14px; font-weight: 600; color: var(--ink); word-break: break-word; }
 .log-freq { font-size: 12px; color: var(--faint); margin-top: 3px; }
@@ -197,7 +232,7 @@ a:hover { text-decoration: underline; }
 }
 .btn:hover { background: var(--panel-2); text-decoration: none; }
 .btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-.btn-primary:hover { background: #095a93; }
+.btn-primary:hover { background: var(--accent-hover); }
 .btn-sm { font-size: 13px; padding: 6px 12px; }
 
 /* ---- Formulaires ---- */
@@ -315,18 +350,66 @@ textarea { resize: vertical; min-height: 72px; }
 .empty { text-align: center; padding: 56px 20px; color: var(--muted); border: 1px solid var(--line); border-radius: var(--radius); }
 
 /* ---- Responsive ---- */
+
+/* Tablette */
+@media (max-width: 1000px) {
+  .topbar-inner { padding: 0 20px; }
+  .container { padding: 30px 20px 60px; }
+  .ticket-detail-grid { grid-template-columns: 1fr 240px; gap: 28px; }
+}
+
+/* Mobile */
 @media (max-width: 760px) {
-  .topbar-inner { gap: 16px; padding: 0 16px; }
-  .topnav { gap: 16px; }
-  .user-chip { display: none; }
-  .container { padding: 24px 16px 56px; }
+  .topbar-inner { gap: 14px; padding: 0 16px; height: 56px; }
+  .brand .name { font-size: 17px; }
+  .topnav { gap: 18px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .topnav a { padding: 6px 0; white-space: nowrap; }
+
+  /* Le bouton Déconnexion doit rester accessible sur mobile :
+     on masque le nom et le rôle, on garde uniquement le lien. */
+  .user-chip { display: flex; gap: 0; }
+  .user-chip .who, .user-chip span { display: none; }
+  .user-chip a { display: inline; }
+
+  .container { padding: 22px 16px 52px; }
+  .page-head h1 { font-size: 21px; }
+  .sim-banner h1 { font-size: 20px; }
+
+  /* Les champs passent à 16px pour empêcher le zoom auto d'iOS au focus */
+  input[type=text], input[type=password], select, textarea { font-size: 16px; }
+
+  /* Listes de simulations : cible tactile plus généreuse */
+  .sim-row { padding: 15px 16px; gap: 12px; }
+  .sim-row .chev { display: none; }
+
+  /* Journal radio : passage en deux colonnes */
   .log-thead { display: none; }
-  .log-row { grid-template-columns: 64px 1fr; gap: 12px; }
+  .log-row { grid-template-columns: 64px 1fr; gap: 6px 12px; padding: 13px 16px; }
   .log-actor { grid-column: 2; }
-  .log-body { grid-column: 1 / -1; margin-top: 2px; }
-  .ticket-detail-grid { grid-template-columns: 1fr; gap: 26px; }
+  .log-body { grid-column: 1 / -1; margin-top: 4px; }
+
+  /* Tableaux de tickets : défilement horizontal plutôt que débordement */
+  .ticket-table { display: block; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+
+  .ticket-detail-grid { grid-template-columns: 1fr; gap: 24px; }
   .diff-box { grid-template-columns: 1fr; }
   .stat-grid { grid-template-columns: 1fr; }
   .stat-card { border-right: none; border-bottom: 1px solid var(--line); }
   .stat-card:last-child { border-bottom: none; }
+
+  /* Boutons : surface tactile minimale confortable */
+  .btn { padding: 10px 16px; min-height: 42px; display: inline-flex; align-items: center; }
+  .btn-sm { min-height: 38px; }
+  .demo-row { padding: 11px 0; }
+
+  /* Modale : moins d'espace perdu en haut */
+  .modal-overlay { padding: 24px 14px; }
+  .modal { padding: 22px 20px; }
+}
+
+/* Petits écrans */
+@media (max-width: 420px) {
+  .banner-meta { gap: 4px 14px; }
+  .log-row { grid-template-columns: 56px 1fr; }
+  .login-card .name-big { font-size: 23px; }
 }

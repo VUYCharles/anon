@@ -2,6 +2,8 @@
 Gestionnaire de logs de simulation ATC
 Backend Flask — stockage en fichiers JSON, authentification par session,
 isolation stricte par centre et filtrage des données selon le profil.
+
+Code by @VUYCharles
 """
 import os
 import json

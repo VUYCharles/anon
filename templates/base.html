@@ -1,9 +1,12 @@
 <!DOCTYPE html>
+<!-- Simlog — code by @VUYCharles -->
 <html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}Logs de simulation ATC{% endblock %}</title>
+  <meta name="color-scheme" content="light dark">
+  <meta name="author" content="@VUYCharles">
+  <title>{% block title %}Simlog{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -11,7 +14,7 @@
 <header class="topbar">
   <div class="topbar-inner">
     <a href="{{ url_for('index') }}" class="brand">
-      <span class="name">ATC Log Manager</span>
+      <span class="name">Simlog</span>
     </a>
     <nav class="topnav">
       <a href="{{ url_for('index') }}" class="{{ 'active' if request.endpoint == 'index' }}">Simulations</a>
