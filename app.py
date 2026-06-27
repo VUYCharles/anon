@@ -334,6 +334,23 @@ def _periode_from_start(start_date):
     return "nuit" if (hh < 7 or hh >= 21) else "jour"
 
 
+def _intensite_from_flights(n):
+    """Niveau de trafic 1–4 à partir du nombre de vols (pour l'indicateur à barres)."""
+    try:
+        n = int(n)
+    except (ValueError, TypeError):
+        return 0
+    if n <= 0:
+        return 0
+    if n < 30:
+        return 1
+    if n < 100:
+        return 2
+    if n < 200:
+        return 3
+    return 4
+
+
 def normalize_simulation(raw, sim_id, stage=None):
     """
     Reconstruit un modèle de rendu commun, que la simulation soit un .simlog natif
@@ -359,6 +376,7 @@ def normalize_simulation(raw, sim_id, stage=None):
         "description": props.get("description") or "",
         "objectives": props.get("objectives") or "",
         "flight_count": props.get("flightCount"),
+        "intensite": _intensite_from_flights(props.get("flightCount")),
         "categorie": env.get("categorie"),
         "stage": stage or env.get("categorie"),
         "periode": _periode_from_start(props.get("start_date")),
@@ -623,7 +641,8 @@ def simulation(sim_id):
         for t in load_tickets().values():
             if t["simulation_id"] == sim_id:
                 sim_tickets.setdefault(t["event_index"], []).append(t)
-    return render_template("simulation.html", sim=filtered, sim_tickets=sim_tickets)
+    return render_template("simulation.html", sim=filtered, sim_tickets=sim_tickets,
+                           print_mode=request.args.get("print") == "1")
 
 
 # ---------------------------------------------------------------------------

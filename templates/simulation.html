@@ -1,7 +1,13 @@
 {% extends "base.html" %}
 {% block title %}{{ sim.titre }} — Simlog{% endblock %}
 {% block content %}
-<div class="breadcrumb"><a href="{{ url_for('index') }}">Stages</a>{% if sim.stage %} / <a href="{{ url_for('stage_detail', stage=sim.stage) }}">{{ sim.stage }}</a>{% endif %} / {{ sim.id }}</div>
+<div class="breadcrumb breadcrumb-bar">
+  <span><a href="{{ url_for('index') }}">Stages</a>{% if sim.stage %} / <a href="{{ url_for('stage_detail', stage=sim.stage) }}">{{ sim.stage }}</a>{% endif %} / {{ sim.id }}</span>
+  <a class="print-link" href="{{ url_for('simulation', sim_id=sim.id) }}?print=1" title="Imprimer ce log">
+    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M6 14h12v7H6z"/></svg>
+    Imprimer
+  </a>
+</div>
 
 <div class="sim-banner">
   <span class="sim-id">{{ sim.id }}</span>
@@ -152,6 +158,7 @@
 {% endblock %}
 
 {% block scripts %}
+{% if print_mode %}<script>window.addEventListener('load', function(){ setTimeout(function(){ window.print(); }, 250); });</script>{% endif %}
 {% if current_user.role == 'instructeur' %}
 <script>
 function openTicket(index, t, acteur) {
