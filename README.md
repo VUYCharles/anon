@@ -3,6 +3,28 @@
 Webapp de gestion des logs de simulations de contrôle aérien : catalogue,
 accès par aéroport et par rôle, remontée de tickets, édition centralisée.
 
+
+## Organisation par stage
+
+Les logs de simulation sont rangés par **stage** (module de formation) : un
+sous-dossier de `data/simulations/` = un stage. Le nom du stage suit aussi le
+champ `logsim.categorie` du fichier.
+
+```
+data/simulations/
+├── ARMAGEDDON/   # 195ARMA_SIM, ARMA_SIMA, BOB1…
+├── BO_ITM/       # ARMA, ARMA44, ARMATESTBOB
+├── FSAU/         # AWAE14L1F, FSAU14_1…
+├── ITM/          # ITM14M2PC
+├── PC2/          # APPITM14L11PC_DAL
+└── *.simlog      # simulations sans stage (rangées à la racine)
+```
+
+L'accueil affiche le **mur des stages** ; chaque carte ouvre le **contenu du
+stage** (ses simulations, avec marqueur jour/nuit). L'isolation par centre et le
+filtrage par rôle restent inchangés.
+
+
 ## Lancement
 
 ```bash

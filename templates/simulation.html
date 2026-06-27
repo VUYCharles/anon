@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ sim.titre }} — Simlog{% endblock %}
 {% block content %}
-<div class="breadcrumb"><a href="{{ url_for('index') }}">Simulations</a> / {{ sim.id }}</div>
+<div class="breadcrumb"><a href="{{ url_for('index') }}">Stages</a>{% if sim.stage %} / <a href="{{ url_for('stage_detail', stage=sim.stage) }}">{{ sim.stage }}</a>{% endif %} / {{ sim.id }}</div>
 
 <div class="sim-banner">
   <span class="sim-id">{{ sim.id }}</span>

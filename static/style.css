@@ -441,3 +441,82 @@ textarea { resize: vertical; min-height: 72px; }
   .log-row { grid-template-columns: 56px 1fr; }
   .login-card .name-big { font-size: 23px; }
 }
+
+/* =========================================================================
+   Stages — mur de cartes + contenu d'un stage
+   ========================================================================= */
+.stage-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
+  gap: 18px;
+}
+.stage-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--panel);
+  color: var(--ink);
+  transition: border-color .12s ease, transform .12s ease, box-shadow .12s ease;
+}
+.stage-card:hover {
+  text-decoration: none;
+  border-color: var(--line-strong);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px -12px rgba(10, 107, 176, .45);
+}
+.stage-card-banner {
+  height: 92px;
+  background:
+    linear-gradient(135deg, var(--accent) 0%, #0d4d7e 100%);
+  position: relative;
+}
+.stage-card-banner::after {
+  /* fines lignes type "radar", discrètes */
+  content: "";
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(90deg, rgba(255,255,255,.10) 0 1px, transparent 1px 26px);
+  opacity: .6;
+}
+.stage-card-body { padding: 14px 16px 6px; flex: 1; }
+.stage-card-body h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.stage-card-meta { font-size: 13px; color: var(--muted); margin-top: 4px; }
+.stage-card-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px;
+  border-top: 1px solid var(--line);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 500;
+}
+.stage-card-foot .chev { font-size: 18px; line-height: 1; color: var(--accent); }
+
+/* Icône jour / nuit dans les listes de simulations */
+.sim-row .periode {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; flex: none;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+}
+.periode-jour { color: var(--amber); background: var(--accent-soft); border-color: transparent; }
+.periode-nuit { color: var(--accent); background: var(--accent-soft); border-color: transparent; }
+
+@media (prefers-color-scheme: dark) {
+  .stage-card-banner { background: linear-gradient(135deg, #1d6fa8 0%, #0c3a5e 100%); }
+  .periode-jour { color: var(--amber); }
+}
+
+@media (max-width: 760px) {
+  .stage-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .stage-card-banner { height: 74px; }
+}
+@media (max-width: 420px) {
+  .stage-grid { grid-template-columns: 1fr; }
+}

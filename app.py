@@ -76,37 +76,77 @@ def load_audit():
 def save_audit(audit):
     _save(os.path.join(DATA_DIR, "audit.json"), audit)
 
+def _iter_sim_paths():
+    """Parcourt récursivement data/simulations/ (un sous-dossier = un stage)."""
+    for root, _dirs, files in os.walk(SIM_DIR):
+        for fname in files:
+            if fname.endswith(SIM_EXT) and ".bak" not in fname:
+                yield os.path.join(root, fname)
+
+
+def _sim_path(sim_id):
+    """Résout le chemin d'un .simlog par son identifiant, où qu'il soit rangé."""
+    for path in _iter_sim_paths():
+        if os.path.splitext(os.path.basename(path))[0] == sim_id:
+            return path
+    return None
+
+
+def _stage_from_path(path):
+    """Nom de stage déduit du sous-dossier (None si le fichier est à la racine)."""
+    rel = os.path.relpath(os.path.dirname(path), SIM_DIR)
+    if rel in (".", ""):
+        return None
+    return rel.split(os.sep)[0].replace("_", " ")
+
+
 def load_simulation(sim_id):
     """Charge un .simlog et renvoie le modèle de rendu normalisé."""
-    raw = load_simulation_raw(sim_id)
+    path = _sim_path(sim_id)
+    if path is None:
+        return None
+    raw = _load(path)
     if raw is None:
         return None
-    return normalize_simulation(raw, sim_id)
+    return normalize_simulation(raw, sim_id, _stage_from_path(path))
 
 
 def load_simulation_raw(sim_id):
     """Charge le contenu brut du fichier .simlog (schéma natif + enveloppe)."""
-    path = os.path.join(SIM_DIR, f"{sim_id}{SIM_EXT}")
-    if not os.path.exists(path):
+    path = _sim_path(sim_id)
+    if path is None or not os.path.exists(path):
         return None
     return _load(path)
 
 
 def save_simulation_raw(sim_id, data):
-    _save(os.path.join(SIM_DIR, f"{sim_id}{SIM_EXT}"), data)
+    """Réécrit le .simlog à son emplacement existant (ou à la racine si nouveau)."""
+    path = _sim_path(sim_id) or os.path.join(SIM_DIR, f"{sim_id}{SIM_EXT}")
+    _save(path, data)
 
 
 def list_simulations():
     """Liste les simulations sous forme de modèles normalisés."""
     sims = []
-    for path in sorted(glob.glob(os.path.join(SIM_DIR, f"*{SIM_EXT}"))):
-        if ".bak" in os.path.basename(path):
-            continue
+    for path in sorted(_iter_sim_paths(), key=lambda p: os.path.basename(p).lower()):
         raw = _load(path)
         if raw:
             sim_id = os.path.splitext(os.path.basename(path))[0]
-            sims.append(normalize_simulation(raw, sim_id))
+            sims.append(normalize_simulation(raw, sim_id, _stage_from_path(path)))
     return sims
+
+
+def group_by_stage(sims):
+    """Regroupe une liste de simulations par stage, stages triés alphabétiquement.
+    Renvoie (stages, sans_stage) où stages = [(nom, [sims]), ...]."""
+    stages, sans_stage = {}, []
+    for s in sims:
+        if s.get("stage"):
+            stages.setdefault(s["stage"], []).append(s)
+        else:
+            sans_stage.append(s)
+    ordered = [(nom, stages[nom]) for nom in sorted(stages, key=str.lower)]
+    return ordered, sans_stage
 
 
 # ---------------------------------------------------------------------------
@@ -285,10 +325,20 @@ def _timeline_from_pilot_logs(raw):
     return evenements
 
 
-def normalize_simulation(raw, sim_id):
+def _periode_from_start(start_date):
+    """'jour' / 'nuit' à partir de l'heure de début (nuit : avant 7h ou après 21h)."""
+    try:
+        hh = int(str(start_date)[11:13])
+    except (ValueError, TypeError):
+        return None
+    return "nuit" if (hh < 7 or hh >= 21) else "jour"
+
+
+def normalize_simulation(raw, sim_id, stage=None):
     """
     Reconstruit un modèle de rendu commun, que la simulation soit un .simlog natif
     (LFBO) ou un .simlog issu d'un ancien log pédagogique converti.
+    `stage` est déduit du sous-dossier ; à défaut on retombe sur logsim.categorie.
     """
     env = raw.get("logsim", {}) or {}
     props = raw.get("properties", {}) or {}
@@ -296,6 +346,7 @@ def normalize_simulation(raw, sim_id):
     model = {
         "id": env.get("id", sim_id),
         "titre": props.get("name") or env.get("id") or sim_id,
+        "soustitre": (props.get("description") or "").splitlines()[0].strip() if props.get("description") else "",
         "centre": env.get("centre"),
         "terrain": env.get("terrain") or env.get("centre"),
         "position": env.get("position") or "—",
@@ -309,6 +360,8 @@ def normalize_simulation(raw, sim_id):
         "objectives": props.get("objectives") or "",
         "flight_count": props.get("flightCount"),
         "categorie": env.get("categorie"),
+        "stage": stage or env.get("categorie"),
+        "periode": _periode_from_start(props.get("start_date")),
         "instructor_log": raw.get("instructor_log") or {},
         "attendus_pedagogiques": [],
         "evenements": [],
@@ -513,12 +566,43 @@ def logout():
 def index():
     user = current_user()
     sims = [s for s in list_simulations() if can_access_simulation(user, s)]
-    tickets = load_tickets()
-    open_counts = {}
-    for t in tickets.values():
+    open_counts = _open_ticket_counts()
+    stages, sans_stage = group_by_stage(sims)
+    return render_template(
+        "simulations.html",
+        stages=stages,
+        sans_stage=sans_stage,
+        total=len(sims),
+        open_counts=open_counts,
+    )
+
+
+@app.route("/stage/<stage>")
+@login_required
+def stage_detail(stage):
+    user = current_user()
+    sims = [
+        s for s in list_simulations()
+        if can_access_simulation(user, s) and (s.get("stage") or "") == stage
+    ]
+    if not sims:
+        abort(404)
+    sims.sort(key=lambda s: str(s["id"]).lower())
+    open_counts = _open_ticket_counts()
+    return render_template(
+        "stage.html",
+        stage=stage,
+        simulations=sims,
+        open_counts=open_counts,
+    )
+
+
+def _open_ticket_counts():
+    counts = {}
+    for t in load_tickets().values():
         if t["statut"] in ("ouvert", "en_cours"):
-            open_counts[t["simulation_id"]] = open_counts.get(t["simulation_id"], 0) + 1
-    return render_template("simulations.html", simulations=sims, open_counts=open_counts)
+            counts[t["simulation_id"]] = counts.get(t["simulation_id"], 0) + 1
+    return counts
 
 
 # ---------------------------------------------------------------------------
@@ -714,7 +798,8 @@ def admin_edit(sim_id):
         if isinstance(new_data.get("properties"), dict):
             new_data["properties"]["update_date"] = now
 
-        backup_path = os.path.join(SIM_DIR, f"{sim_id}.v{old_version}.bak{SIM_EXT}")
+        live_path = _sim_path(sim_id) or os.path.join(SIM_DIR, f"{sim_id}{SIM_EXT}")
+        backup_path = os.path.join(os.path.dirname(live_path), f"{sim_id}.v{old_version}.bak{SIM_EXT}")
         _save(backup_path, raw)
         save_simulation_raw(sim_id, new_data)
 

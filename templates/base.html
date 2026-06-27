@@ -17,7 +17,7 @@
       <span class="name">Simlog</span>
     </a>
     <nav class="topnav">
-      <a href="{{ url_for('index') }}" class="{{ 'active' if request.endpoint == 'index' }}">Simulations</a>
+      <a href="{{ url_for('index') }}" class="{{ 'active' if request.endpoint in ['index', 'stage_detail'] }}">Stages</a>
       {% if current_user.role in ['instructeur', 'admin'] %}
       <a href="{{ url_for('tickets_list') }}" class="{{ 'active' if request.endpoint in ['tickets_list', 'ticket_detail'] }}">Tickets</a>
       {% endif %}
