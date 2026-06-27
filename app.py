@@ -112,20 +112,6 @@ def list_simulations():
 # ---------------------------------------------------------------------------
 # Normalisation .simlog -> modèle de rendu commun
 # ---------------------------------------------------------------------------
-def _infer_type(description):
-    """Devine un type d'événement (cosmétique : pilote la couleur d'affichage)."""
-    d = (description or "").upper()
-    if any(k in d for k in ("ALERTE", "URGENCE", "BOMBE", "MENACE", "COLLISION")):
-        return "ambiance"
-    if "*RADIO" in d or "RADIO" in d:
-        return "avion_message"
-    if "*APPEL" in d or "*TEL" in d or "TEL " in d or "TÉL" in d:
-        return "telephone_entrant"
-    if any(k in d for k in ("PANNE", "GIVRAGE", "LARGU", " TO ", "TO ", "DECO")):
-        return "avion_action"
-    return "avion_message"
-
-
 def _time_key(t):
     """Clé de tri à partir d'une heure 'HH:MM' ou 'HH:MM:SS'."""
     try:
@@ -137,19 +123,161 @@ def _time_key(t):
         return (1, 0, 0, 0)  # heures invalides en fin de liste
 
 
+# ---------------------------------------------------------------------------
+# Nettoyage / structuration des descriptions natives .simlog
+#
+# Les descriptions natives sont des blocs bruts saisis à la main, du type :
+#   "LFCK LFPO  *appel ' mise en route CLG8102'  (19)"
+#   "LFMK GMTT TO 56 (si changement de SID : AT PRC MASAM3E)"
+#   "LFBF LFBT *TEL LFBF appel AW 'mise en route' (1415TO)"
+# On en extrait des champs propres (route, message radio, n° de strip, heure de
+# décollage…) pour un rendu lisible, sans guillemets ni parenthèses orphelines
+# ni heures qui se répètent.
+# ---------------------------------------------------------------------------
+import re as _re
+
+_ELISION = _re.compile(r"\b([ldnjmstcLDNJMSTC]|qu|Qu|jusqu|lorsqu|puisqu)'", _re.I)
+_SCENARIO = _re.compile(
+    r"\s*((?:ALERTE[^']*?BOMBE|COLLISION AVIAIRE|GIVRAGE FORT|PANNE [A-ZÉÈ]+|MENACE[^']*))"
+)
+_ROUTE = _re.compile(r"\s*([A-Z]{4})\s+([A-Z]{4})\b")
+_TKOFF_TIME = _re.compile(r"\b(\d{2})(\d{2})\s*TO\b")
+_TKOFF_EVT = _re.compile(r"\bTO\s+(\d{1,3})\b")
+_STRIP = _re.compile(r"\((\d{1,3})\)")
+
+
+def _clean_text(s):
+    """Normalise espaces, supprime guillemets/parenthèses orphelins et vides."""
+    if not s:
+        return ""
+    s = s.replace("''", "'").replace('"', "'")
+    s = _re.sub(r"\(\s+", "(", s)
+    s = _re.sub(r"\s+\)", ")", s)
+    s = _re.sub(r"\(\s*\)", "", s)           # parenthèses vides
+    s = _re.sub(r"\s{2,}", " ", s)
+    return s.strip(" '\u00a0\t").strip()
+
+
+def _extract_quotes(s):
+    """Extrait les messages entre guillemets simples, en protégeant les
+    apostrophes d'élision françaises (l', d', qu'…)."""
+    sent = "\u0001"
+    prot = _ELISION.sub(lambda m: m.group(1) + sent, s)
+    msgs = []
+
+    def repl(m):
+        inner = _clean_text(m.group(1).replace(sent, "'"))
+        if inner:
+            msgs.append(inner)
+        return " "
+
+    out = _re.sub(r"'([^']*)'", repl, prot).replace(sent, "'")
+    return msgs, out
+
+
+def parse_native_description(desc):
+    """Transforme une description native brute en champs structurés et propres."""
+    raw = desc or ""
+    work = " " + raw.strip().lstrip("*").strip() + " "
+    work = work.replace("''", "'")
+
+    res = {
+        "origine": None, "destination": None,
+        "decollage": None, "strip": None,
+        "scenario": None, "consigne": None,
+        "message": None, "type": "avion_message",
+    }
+
+    # Scénario en préfixe (alerte à la bombe, collision aviaire, panne…)
+    scen = _SCENARIO.match(work)
+    if scen:
+        res["scenario"] = _clean_text(scen.group(1))
+        work = work[scen.end():]
+
+    # Route OACI en tête : LFCK LFPO
+    rm = _ROUTE.match(work)
+    if rm:
+        res["origine"], res["destination"] = rm.group(1), rm.group(2)
+        work = work[rm.end():]
+
+    # Heure de décollage embarquée : 1415TO -> 14:15 (évite la répétition d'heure)
+    tm = _TKOFF_TIME.search(work)
+    if tm:
+        hh, mm = int(tm.group(1)), int(tm.group(2))
+        if hh <= 23 and mm <= 59:
+            res["decollage"] = f"{hh:02d}:{mm:02d}"
+            work = work[:tm.start()] + " " + work[tm.end():]
+
+    # Événement décollage : TO 19 (le nombre = n° de strip)
+    is_takeoff = False
+    to_evt = _TKOFF_EVT.search(work)
+    if to_evt:
+        res["strip"] = to_evt.group(1)
+        is_takeoff = True
+        work = work[:to_evt.start()] + " " + work[to_evt.end():]
+
+    # Numéro de strip en fin : (19)
+    sm = _STRIP.search(work)
+    if sm:
+        res["strip"] = sm.group(1)
+        work = work[:sm.start()] + " " + work[sm.end():]
+
+    # Messages entre guillemets
+    msgs, work = _extract_quotes(work)
+    if msgs:
+        res["message"] = " / ".join(msgs)
+
+    # Type d'événement (pilote la couleur)
+    u = raw.upper()
+    if res["scenario"] or any(k in u for k in ("ALERTE", "BOMBE", "MENACE", "COLLISION")):
+        res["type"] = "ambiance"
+    elif "*RADIO" in u or _re.search(r"\bRADIO\b", u):
+        res["type"] = "avion_message"
+    elif "*TEL" in u or "*APPEL" in u or _re.search(r"\bAPPEL\b", u) or "*TÉL" in u:
+        res["type"] = "telephone_entrant"
+    elif any(k in u for k in ("PANNE", "GIVR", "LARGU", "PARA")):
+        res["type"] = "avion_action"
+    elif is_takeoff:
+        res["type"] = "avion_action"
+
+    # Consigne = reste nettoyé des marqueurs *appel/*radio/*tel
+    leftover = _clean_text(work)
+    leftover = _re.sub(r"\*\s*(appel|radio|tel|tél)\b", "", leftover, flags=_re.I)
+    leftover = _re.sub(r"^\s*(appel|radio|tel|mise en route)\b", "", leftover, flags=_re.I)
+    leftover = _clean_text(leftover.strip(" :*-/'\u00a0"))
+    if is_takeoff:
+        leftover = "Décollage" if not leftover else "Décollage — " + leftover
+    res["consigne"] = leftover or None
+
+    return res
+
+
 def _timeline_from_pilot_logs(raw):
-    """Construit une timeline chronologique unifiée à partir des pilot_logs."""
+    """Construit une timeline chronologique unifiée et nettoyée à partir des
+    pilot_logs natifs."""
     evenements = []
     for log in raw.get("pilot_logs", []):
         role = log.get("role", "")
         for ev in log.get("events", []):
+            desc = ev.get("description", "")
+            p = parse_native_description(desc)
+            # contenu = repli lisible (vue pilote / templates anciens)
+            contenu = p["message"] or p["consigne"] or p["scenario"] or _clean_text(desc)
             evenements.append({
                 "t": ev.get("time", ""),
                 "acteur": ev.get("callsign", ""),
                 "role": role,
-                "type": _infer_type(ev.get("description", "")),
+                "type": p["type"],
                 "frequence": None,
-                "contenu": ev.get("description", ""),
+                "origine": p["origine"],
+                "destination": p["destination"],
+                "decollage": p["decollage"],
+                "strip": p["strip"],
+                "scenario": p["scenario"],
+                "consigne": p["consigne"],
+                "message": p["message"],
+                "contenu": contenu,
+                "source": _clean_text(desc),
                 "attendu": None,
                 "note_pedago": None,
             })

@@ -192,14 +192,42 @@ a:hover { text-decoration: underline; }
 .log-row:target { background: var(--target-bg); }
 .log-time { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .log-actor-name { font-size: 14px; font-weight: 600; color: var(--ink); word-break: break-word; }
+.log-route { font-size: 12px; color: var(--faint); margin-top: 3px; font-variant-numeric: tabular-nums; letter-spacing: 0.01em; }
+.log-route .route-arrow { color: var(--line-strong); margin: 0 1px; }
 .log-freq { font-size: 12px; color: var(--faint); margin-top: 3px; }
-.log-body { font-size: 15px; }
+.log-body { font-size: 15px; line-height: 1.5; }
+
+/* Message radio/téléphone — élément principal, lisible */
+.ev-message { color: var(--ink); }
+.ev-message::before { content: "« "; color: var(--faint); }
+.ev-message::after  { content: " »"; color: var(--faint); }
+/* Consigne / coordination — secondaire */
+.ev-consigne { margin-top: 5px; font-size: 13.5px; color: var(--muted); }
+.ev-message + .ev-consigne { margin-top: 6px; }
+/* Bandeau de scénario (alerte, collision, panne…) */
+.ev-scenario {
+  display: inline-block; margin-bottom: 7px;
+  font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--red); background: var(--flash-err-bg);
+  padding: 2px 8px; border-radius: 4px;
+}
+/* Badges strip / heure de décollage */
+.ev-badges { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+.ev-badge {
+  font-size: 11.5px; font-variant-numeric: tabular-nums; color: var(--muted);
+  background: var(--panel-2); border: 1px solid var(--line);
+  padding: 2px 8px; border-radius: 999px;
+}
+.ev-badge.badge-to { color: var(--accent); border-color: var(--accent-soft); background: var(--accent-soft); }
 
 /* Distinction discrète par catégorie */
 .t-eleve_instruction { border-left-color: var(--accent); background: var(--accent-soft); }
 .t-eleve_instruction .log-actor-name { color: var(--accent); }
 .t-telephone_sortant, .t-telephone_entrant { border-left-color: var(--amber); }
 .t-telephone_sortant .log-actor-name, .t-telephone_entrant .log-actor-name { color: var(--amber); }
+.t-ambiance { border-left-color: var(--red); }
+.t-ambiance .log-actor-name { color: var(--red); }
+.t-avion_action { border-left-color: var(--green); }
 
 .attendu { margin-top: 8px; font-size: 14px; color: var(--green); }
 .attendu b { font-weight: 600; }

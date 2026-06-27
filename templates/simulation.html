@@ -53,11 +53,26 @@
     <div class="log-time">{{ ev.t }}</div>
     <div class="log-actor">
       <div class="log-actor-name">{{ ev.acteur }}</div>
+      {% if ev.origine and ev.destination %}<div class="log-route">{{ ev.origine }} <span class="route-arrow">→</span> {{ ev.destination }}</div>{% endif %}
       {% if ev.role %}<div class="log-freq">{{ ev.role }}</div>{% endif %}
       {% if ev.frequence %}<div class="log-freq">{{ ev.frequence }}</div>{% endif %}
     </div>
     <div class="log-body">
-      <div>{{ ev.contenu }}</div>
+      {% if ev.scenario %}<div class="ev-scenario">{{ ev.scenario }}</div>{% endif %}
+
+      {% if ev.message or ev.consigne %}
+        {% if ev.message %}<div class="ev-message">{{ ev.message }}</div>{% endif %}
+        {% if ev.consigne %}<div class="ev-consigne">{{ ev.consigne }}</div>{% endif %}
+      {% else %}
+        <div>{{ ev.contenu }}</div>
+      {% endif %}
+
+      {% if ev.strip or ev.decollage %}
+      <div class="ev-badges">
+        {% if ev.strip %}<span class="ev-badge">Strip {{ ev.strip }}</span>{% endif %}
+        {% if ev.decollage %}<span class="ev-badge badge-to">Décollage {{ ev.decollage }}</span>{% endif %}
+      </div>
+      {% endif %}
 
       {% if current_user.role in ['instructeur', 'admin'] %}
         {% if ev.attendu %}<div class="attendu"><b>Attendu :</b> {{ ev.attendu }}</div>{% endif %}
