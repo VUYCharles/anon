@@ -17,7 +17,7 @@
     <div class="sim-main">
       <span class="sim-id">{{ sim.id }}</span>
       <h3>{{ sim.titre }}</h3>
-      <div class="sim-meta">{{ sim.position }} · <span class="mono">{{ sim.terrain }}</span> · {{ sim.duree_estimee_min }} min · {{ sim.evenements|length }} événements · {{ sim.difficulte }}</div>
+      <div class="sim-meta">{{ sim.position }} · <span class="mono">{{ sim.terrain }}</span>{% if sim.categorie %} · {{ sim.categorie }}{% endif %} · {{ sim.duree_estimee_min }} min · {{ sim.evenements|length }} événements · {{ sim.difficulte }}</div>
     </div>
     <div class="sim-aside">
       {% if current_user.role in ['instructeur','admin'] and open_counts.get(sim.id) %}

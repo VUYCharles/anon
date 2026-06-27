@@ -1,0 +1,86 @@
+{
+  "instructor_log": {},
+  "pilot_logs": [
+    {
+      "role": "PSEUDOPILOTE",
+      "events": [
+        {
+          "callsign": "F-GKToulouse",
+          "description": "Tour de Blagnac, F-GK, à la verticale terrain pour intégration, VFR local.",
+          "time": "10:05"
+        },
+        {
+          "callsign": "AFR67BX",
+          "description": "Tour, AFR67BX, prêt au départ 32L.",
+          "time": "10:06"
+        }
+      ]
+    }
+  ],
+  "properties": {
+    "configuration": "Tour (TWR)",
+    "description": "Intégration VFR dans le circuit — Toulouse-Blagnac",
+    "duration": 9,
+    "start_date": "2026-04-20T10:00:00Z",
+    "objectives": "Intégrer un VFR local dans un circuit avec trafic commercial IFR.\nGérer la priorité entre un départ IFR et un VFR en vent arrière.\nEmployer la phraséologie adaptée au trafic VFR.",
+    "name": "Intégration VFR dans le circuit — Toulouse-Blagnac",
+    "traffic_density": 0,
+    "update_date": "2026-05-18T16:30:00Z",
+    "weather": "CAVOK, vent 320/05kt, QNH 1020",
+    "flightCount": 2
+  },
+  "logsim": {
+    "id": "LFBO-001",
+    "centre": "LFBO",
+    "terrain": "LFBO",
+    "position": "Tour (TWR)",
+    "difficulte": "Débutant",
+    "version": 2,
+    "date_creation": "2026-04-20T10:00:00",
+    "date_modification": "2026-05-18T16:30:00",
+    "attendus_pedagogiques": [
+      "Intégrer un VFR local dans un circuit avec trafic commercial IFR.",
+      "Gérer la priorité entre un départ IFR et un VFR en vent arrière.",
+      "Employer la phraséologie adaptée au trafic VFR."
+    ],
+    "evenements": [
+      {
+        "t": "10:05:00",
+        "acteur": "F-GKToulouse",
+        "type": "avion_message",
+        "frequence": "TWR 118.100",
+        "contenu": "Tour de Blagnac, F-GK, à la verticale terrain pour intégration, VFR local.",
+        "attendu": null,
+        "note_pedago": null
+      },
+      {
+        "t": "10:05:20",
+        "acteur": "Élève contrôleur",
+        "type": "eleve_instruction",
+        "frequence": "TWR 118.100",
+        "contenu": "F-GK, intégrez vent arrière main gauche piste 32L, rappelez en vent arrière.",
+        "attendu": "Intégrer le VFR dans le circuit avec une consigne de rappel claire.",
+        "note_pedago": "Vérifier l'usage du côté de circuit (main gauche) et la demande de rappel."
+      },
+      {
+        "t": "10:06:10",
+        "acteur": "AFR67BX",
+        "type": "avion_message",
+        "frequence": "TWR 118.100",
+        "contenu": "Tour, AFR67BX, prêt au départ 32L.",
+        "attendu": null,
+        "note_pedago": null
+      },
+      {
+        "t": "10:06:25",
+        "acteur": "Élève contrôleur",
+        "type": "eleve_instruction",
+        "frequence": "TWR 118.100",
+        "contenu": "AFR67BX, alignez 32L et attendez, trafic VFR en vent arrière.",
+        "attendu": "Différer le départ IFR pour assurer l'espacement avec le VFR intégré.",
+        "note_pedago": "Cœur de la simu : gérer la priorité IFR/VFR. L'élève doit retarder le départ sans bloquer la piste trop longtemps."
+      }
+    ],
+    "source_format": "logsim-pedagogique-v1"
+  }
+}

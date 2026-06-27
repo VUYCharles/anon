@@ -8,12 +8,21 @@
   <h1>{{ sim.titre }}</h1>
   <div class="banner-meta">
     <span>{{ sim.position }} · {{ sim.terrain }}</span>
+    {% if sim.categorie %}<span class="mono">{{ sim.categorie }}</span>{% endif %}
     <span>Durée {{ sim.duree_estimee_min }} min</span>
     <span>Difficulté <b>{{ sim.difficulte }}</b></span>
     <span>Version {{ sim.version }}</span>
+    {% if sim.flight_count %}<span>{{ sim.flight_count }} vols</span>{% endif %}
     {% if sim.meteo %}<span class="meteo">{{ sim.meteo }}</span>{% endif %}
   </div>
 </div>
+
+{% if current_user.role in ['instructeur', 'admin'] and sim.description %}
+<div class="pedago-block">
+  <h2>Briefing du scénario</h2>
+  <p style="white-space:pre-wrap;margin:0;">{{ sim.description }}</p>
+</div>
+{% endif %}
 
 {% if current_user.role in ['instructeur', 'admin'] and sim.attendus_pedagogiques %}
 <div class="pedago-block">
@@ -44,6 +53,7 @@
     <div class="log-time">{{ ev.t }}</div>
     <div class="log-actor">
       <div class="log-actor-name">{{ ev.acteur }}</div>
+      {% if ev.role %}<div class="log-freq">{{ ev.role }}</div>{% endif %}
       {% if ev.frequence %}<div class="log-freq">{{ ev.frequence }}</div>{% endif %}
     </div>
     <div class="log-body">
@@ -77,6 +87,9 @@
     </div>
   </div>
   {% endfor %}
+  {% if not sim.evenements %}
+  <div class="empty" style="grid-column:1/-1;">Ce log de simulation ne contient aucun événement enregistré.</div>
+  {% endif %}
 </div>
 
 {% if current_user.role == 'instructeur' %}

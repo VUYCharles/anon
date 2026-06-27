@@ -1,0 +1,370 @@
+{
+  "instructor_log": {},
+  "pilot_logs": [
+    {
+      "role": "PILOTADJE",
+      "events": [
+        {
+          "callsign": "CLG8102",
+          "description": "LFCK LFPO  *appel ' mise en route CLG8102'  (19)",
+          "time": "13:51"
+        },
+        {
+          "callsign": "CLG8102",
+          "description": "LFCK LFPO*appel CK vers AE  'clairance  Chalair8102 ( FINOT) ' (19)",
+          "time": "13:54"
+        },
+        {
+          "callsign": "CLG8102",
+          "description": "LFCK LFPO TO 19",
+          "time": "13:56"
+        },
+        {
+          "callsign": "N134EC",
+          "description": "LFCI LFBL *appel CI vers  AE 'mise en route  N134EC' (15)",
+          "time": "13:48"
+        },
+        {
+          "callsign": "N134EC",
+          "description": "LFCI LFCL *appel CI vers AE  'clairance du N134EC  (FINOT) '",
+          "time": "13:50"
+        },
+        {
+          "callsign": "N134EC",
+          "description": "LFCI LFBL TO 15",
+          "time": "13:52"
+        },
+        {
+          "callsign": "FGTQB",
+          "description": "LFCL LFBA *appel CL vers AE 'mise en route FGTQB' (33)",
+          "time": "14:05"
+        },
+        {
+          "callsign": "FGTQB",
+          "description": "LFCI LFBA *appel CI vers AE 'clairance ( GAI) ' (33)",
+          "time": "14:07"
+        },
+        {
+          "callsign": "FGTQB",
+          "description": "LFCI LFBA TO 33",
+          "time": "14:10"
+        },
+        {
+          "callsign": "RYR6042",
+          "description": "LFMK GMTT *appel ' mise en route RYR6042' (56)",
+          "time": "14:27"
+        },
+        {
+          "callsign": "RYR6042",
+          "description": "LFMK GMTT *appel MK vers AE 'clairance (GALDO3E)' (56)",
+          "time": "14:31"
+        },
+        {
+          "callsign": "RYR6042",
+          "description": "TO 56 (si changement de SID : AT PRC MASAM3E)",
+          "time": "14:33"
+        },
+        {
+          "callsign": "N502CD",
+          "description": "LFLY LFBD *appel  FE(LFCC...) vers AE ' J'ai un VFR au FL115 à te passer, tu es prêt à noter les éléments?'",
+          "time": "13:49"
+        },
+        {
+          "callsign": "N502CD",
+          "description": "LFLY LFBD PANNE ALTIMETRIQUE afficher directement GJ98, et ne rien dire",
+          "time": "13:53"
+        },
+        {
+          "callsign": "N502CD",
+          "description": "LFLY LFBD PANNE ALTIMETRIQUE Si le CTL s'interroge: 'Nous sommes bien stables FL115'",
+          "time": "13:53"
+        },
+        {
+          "callsign": "N502CD",
+          "description": "LFLY LFBD PANNE ALTIMETRIQUE suite  'Nous vérifions notre alticodeur. Nous n'avons qu'un seul ensemble, il semble HS'",
+          "time": "13:53"
+        },
+        {
+          "callsign": "N502CD",
+          "description": "LFLY LFBD ... C'est le N502CD, SR22 de LFLY vers LFBD, FL115 sur GAI' pas d'action pilotage",
+          "time": "13:49"
+        }
+      ]
+    },
+    {
+      "role": "PILOTADJW",
+      "events": [
+        {
+          "callsign": "FHTIL",
+          "description": "LFBZ LFLL *appel  BP vers AW  'TRANSIT FL 100 vers TOU ?'",
+          "time": "13:47"
+        },
+        {
+          "callsign": "NAK534",
+          "description": "LFDJ LFBP *appel 'mise en route' (20)",
+          "time": "13:51"
+        },
+        {
+          "callsign": "NAK534",
+          "description": "LFDJ LFBP *appel  DJ vers AW 'clairance NAK534 ( omni TEPTI)'  (20)",
+          "time": "13:54"
+        },
+        {
+          "callsign": "NAK534",
+          "description": "LFDJ LFBP TO 20",
+          "time": "13:57"
+        },
+        {
+          "callsign": "FMY8959",
+          "description": "LFDB LFBT pour info automatic TO (aucune action pilote)",
+          "time": "13:51"
+        },
+        {
+          "callsign": "FMY8959",
+          "description": "LFDB LFBT *radio 'French marine 8959 IFR vers 3000 pour prise en compte IFR  (LACOU)'",
+          "time": "13:51"
+        },
+        {
+          "callsign": "EAP31A",
+          "description": "LFBR LFMV *appel  BR vers AW 'EAP31A mise en route' (28)",
+          "time": "14:00"
+        },
+        {
+          "callsign": "EAP31A",
+          "description": "LFBR LFMV *appel BR vers AE  ' clairance Eaéropyrennées 31A (OGRIL) '  (28)",
+          "time": "14:02"
+        },
+        {
+          "callsign": "EAP31A",
+          "description": "LFBR LFMV TO 28",
+          "time": "14:05"
+        },
+        {
+          "callsign": "CTM1312",
+          "description": "LFBC LFBF *appel de LFBP vers AW 'CTM1312 SURAS  FL70 ?'",
+          "time": "14:09"
+        },
+        {
+          "callsign": "FHMTO",
+          "description": "LFBF LFBT *TEL LFBF appel AW 'mise en route' (1415TO)",
+          "time": "14:09"
+        },
+        {
+          "callsign": "FHMTO",
+          "description": "LFBF LFBT *TEL LFBF vers AW 'appel CLR (FPL AUCHE2E? )'  ne pas mentionner d'altitude (=>3000ft) (1415TO)",
+          "time": "14:12"
+        },
+        {
+          "callsign": "FHMTO",
+          "description": "LFBF LFBT TO (38)",
+          "time": "14:15"
+        },
+        {
+          "callsign": "FGFEF",
+          "description": "LFBA LFMP *TEL appel  'FGFEF' mise en route' (40)",
+          "time": "14:11"
+        },
+        {
+          "callsign": "FGFEF",
+          "description": "LFBA LFMP *appel BA  vers AW 'clairance (AGN)' (40)",
+          "time": "14:15"
+        },
+        {
+          "callsign": "FGFEF",
+          "description": "LFBA LFMP TO 40",
+          "time": "14:17"
+        },
+        {
+          "callsign": "NAK097",
+          "description": "*appel BD vers AW  appel 'NAK097 FL80 vers LACOU?'",
+          "time": "14:30"
+        },
+        {
+          "callsign": "N777GX",
+          "description": "LFBA LFBT  *appel BA vers AW  'mise en route  (54)",
+          "time": "13:50"
+        },
+        {
+          "callsign": "N777GX",
+          "description": "LFBA LFBT *appel BA vers AW  'clairance N777GX  (AGN 4000ft)'  (54)",
+          "time": "13:52"
+        },
+        {
+          "callsign": "EZY16RM",
+          "description": "ALERTE A LA BOMBE : *appel CDT vers AW  'La DPAF vient de m'appeler, on a reçu une menace  alerte à la bombe pour EZY16RM,",
+          "time": "14:08"
+        },
+        {
+          "callsign": "EZY16RM",
+          "description": "ALERTE A LA BOMBE ... l'appel anonyme EST EN COURS D'ANALYSE, informe le pilote, je te rappelle avec plus d'infos.'",
+          "time": "14:08"
+        },
+        {
+          "callsign": "EZY16RM",
+          "description": "ALERTE A LA BOMBE : *TEL CDT appelle AW 'La mence est jugée crédible, dis-le au pilote.'",
+          "time": "14:12"
+        },
+        {
+          "callsign": "EZY16RM",
+          "description": "ALERTE A LA BOMBE suite au message pilote, réponse *RADIO: 'Roger, we continue our flight, keep me advised.'",
+          "time": "14:08"
+        },
+        {
+          "callsign": "EZY16RM",
+          "description": "ALERTE A LA BOMBE réponse au msg du CTLR *RADIO : 'We want to come back to Blagnac as soon as possible.'",
+          "time": "14:13"
+        },
+        {
+          "callsign": "EZY16RM",
+          "description": "ALERTE A LA BOMBE sur instruction CTLR :TMC 5677 (<-espace obligé), RW14R",
+          "time": "14:13"
+        },
+        {
+          "callsign": "EZY16RM",
+          "description": "ALERTE A LA BOMBE *TEL CDT appelle AW  'Tu me le poses en 14R car il risque d'aller en bikini, mais",
+          "time": "14:14"
+        },
+        {
+          "callsign": "EZY16RM",
+          "description": "ALERTE A LA BOMBE le risque d'évacuation par toboggan sur la piste reste possible: aucune arrivée pendant 10 minutes.'",
+          "time": "14:14"
+        },
+        {
+          "callsign": "EZY16RM",
+          "description": "ALERTE A LA BOMBE *appel  CDT vers AW 'EZY16RM posé stationné en BIKINI pas d'utilisation des tobogans tu peux ramener'",
+          "time": "14:23"
+        },
+        {
+          "callsign": "FGFEF",
+          "description": "GIVRAGE FORT      *RADIO 'nous rencontrons du givrage fort  demandons à monter au FL90 pour être au dessus de la couche'",
+          "time": "14:30"
+        },
+        {
+          "callsign": "AFR326V",
+          "description": "LFBF LFBT *appel  BF vers AW 'mise en route' (1407)",
+          "time": "14:40"
+        },
+        {
+          "callsign": "AFR326V",
+          "description": "LFBF LFBT *appel BF vers AW ' clairance (AUCHE2E) ne pas mentionner d'altitude (2000ft initial puis virage=>3000ft) ' (1407)",
+          "time": "14:43"
+        },
+        {
+          "callsign": "AFR326V",
+          "description": "TO 1407",
+          "time": "14:44"
+        },
+        {
+          "callsign": "FGFEF",
+          "description": "GIVRAGE FORT virage gauche possible si demande contrôle",
+          "time": "14:30"
+        },
+        {
+          "callsign": "N777GX",
+          "description": "LFBA LFBT TO 54",
+          "time": "13:54"
+        },
+        {
+          "callsign": "NAK524A",
+          "description": "LFBP LFBR *appel BP vers AW: 'NAK524A 5000ft sur AGN?'",
+          "time": "14:22"
+        }
+      ]
+    },
+    {
+      "role": "PILOTAE1",
+      "events": [
+        {
+          "callsign": "RYR508H",
+          "description": "PANNE RADIO sur AE : aucun contact pendant 3 min 30",
+          "time": "14:00"
+        },
+        {
+          "callsign": "RYR508H",
+          "description": "PANNE RADIO sur AE : *RADIO reprise de toutes les communications",
+          "time": "14:03"
+        }
+      ]
+    },
+    {
+      "role": "PILOTAE2",
+      "events": []
+    },
+    {
+      "role": "PILOTAW1",
+      "events": [
+        {
+          "callsign": "FGLEU",
+          "description": "LFDJ PARA *RADIO contact   passant 3000ft 'FGULA  para Pamier pour activer la zone au fl140' pas d'action pilotage",
+          "time": "13:43"
+        },
+        {
+          "callsign": "FGLEU",
+          "description": "LFDJ PARA *RADIO quand FL140 appel pour autorisation de larguer ? descente automatique",
+          "time": "13:48"
+        },
+        {
+          "callsign": "AIB01GD",
+          "description": "LFBB LFBO *appel LFBD vers AW 'AIB01GD sur SURAS FL80?'",
+          "time": "14:01"
+        },
+        {
+          "callsign": "AFR65SY",
+          "description": "PANNE ALTICODEUR retour à la normale: GJ 112 (GJ: s'afficher immédiatement au FL112)  monter FL140",
+          "time": "13:58"
+        },
+        {
+          "callsign": "AFR65SY",
+          "description": "PANNE ALTICODEUR suite à question CTRL, répondre comme si le vol montait au FL140 ''on est au FL** en montée vers FL140''",
+          "time": "13:56"
+        },
+        {
+          "callsign": "AFR65SY",
+          "description": "PANNE ALTICODEUR Au 1er contact, collationner FL140 stopper la montée au FL77",
+          "time": "13:55"
+        },
+        {
+          "callsign": "AFR65SY",
+          "description": "PANNE ALTICODEUR 'On vérifie notre premier ensemble' 'on passe sur le 2ème ensemble'",
+          "time": "13:57"
+        }
+      ]
+    },
+    {
+      "role": "PILOTAW2",
+      "events": []
+    },
+    {
+      "role": "PILOTITM",
+      "events": []
+    },
+    {
+      "role": "PILOTSIV",
+      "events": []
+    }
+  ],
+  "properties": {
+    "configuration": "",
+    "description": "distribution layout: AW AE 5 PIL (ITM à AE)\r\nrelève à 14h08: 1_IL relève Ast AE 2_qui relève AW 3_qui relève Ast AW 4_qui relève AE 5_qui relève Ast AE\r\nPanne altimètre, Givrage, Panne chaîne radio sur une position, Appel anonyme menace sur un vol",
+    "duration": 120,
+    "start_date": "2024-10-23T13:37:00Z",
+    "objectives": "",
+    "name": "FSAU14_1",
+    "traffic_density": 0,
+    "update_date": "2026-03-12T16:49:54Z",
+    "weather": "",
+    "flightCount": 84
+  },
+  "logsim": {
+    "id": "FSAU14_1",
+    "centre": "LFBO",
+    "terrain": "LFBO",
+    "position": "Pseudo-pilotes (ADJE, ADJW, AE1, AW1)",
+    "difficulte": "Non précisé",
+    "version": 1,
+    "categorie": "FSAU",
+    "date_creation": "2024-10-23T13:37:00Z",
+    "date_modification": "2026-03-12T16:49:54Z",
+    "source_format": "simlog-natif-v1"
+  }
+}

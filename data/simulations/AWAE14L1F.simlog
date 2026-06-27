@@ -1,0 +1,61 @@
+{
+  "instructor_log": {},
+  "pilot_logs": [
+    {
+      "role": "PILOTADJE",
+      "events": []
+    },
+    {
+      "role": "PILOTADJW",
+      "events": []
+    },
+    {
+      "role": "PILOTAE1",
+      "events": []
+    },
+    {
+      "role": "PILOTAE2",
+      "events": []
+    },
+    {
+      "role": "PILOTAW1",
+      "events": []
+    },
+    {
+      "role": "PILOTAW2",
+      "events": []
+    },
+    {
+      "role": "PILOTITM",
+      "events": []
+    },
+    {
+      "role": "PILOTSIV",
+      "events": []
+    }
+  ],
+  "properties": {
+    "configuration": "",
+    "description": "distribution layout: AW AE 5 PIL (ITM à AE)\r\nrelève à 14h08: 1_IL relève Ast AE 2_qui relève AW 3_qui relève Ast AW 4_qui relève AE 5_qui relève Ast AE\r\nPanne altimètre, Givrage, Panne chaîne radio sur une position, Appel anonyme menace sur un vol",
+    "duration": 120,
+    "start_date": "2024-10-23T13:37:00Z",
+    "objectives": "",
+    "name": "AWAE14L1F",
+    "traffic_density": 0,
+    "update_date": "2026-03-12T16:49:54Z",
+    "weather": "",
+    "flightCount": 6
+  },
+  "logsim": {
+    "id": "AWAE14L1F",
+    "centre": "LFBO",
+    "terrain": "LFBO",
+    "position": "Pseudo-pilotes (multipositions)",
+    "difficulte": "Non précisé",
+    "version": 1,
+    "categorie": "FSAU",
+    "date_creation": "2024-10-23T13:37:00Z",
+    "date_modification": "2026-03-12T16:49:54Z",
+    "source_format": "simlog-natif-v1"
+  }
+}

@@ -39,5 +39,39 @@
       }
     ],
     "resolution": null
+  },
+  "TKT-003": {
+    "id": "TKT-003",
+    "simulation_id": "LFPG-001",
+    "event_index": 1,
+    "type": "signalement",
+    "titre": "Test",
+    "statut": "ouvert",
+    "auteur": "LFPG",
+    "auteur_nom": "Paris-Charles de Gaulle (instructeur)",
+    "centre": "LFPG",
+    "date": "2026-06-27T05:44:39",
+    "contenu": "Vérif",
+    "avant": null,
+    "apres": null,
+    "commentaires": [],
+    "resolution": null
+  },
+  "TKT-004": {
+    "id": "TKT-004",
+    "simulation_id": "LFPG-001",
+    "event_index": 1,
+    "type": "signalement",
+    "titre": "Test",
+    "statut": "ouvert",
+    "auteur": "LFPG",
+    "auteur_nom": "Paris-Charles de Gaulle (instructeur)",
+    "centre": "LFPG",
+    "date": "2026-06-27T05:45:16",
+    "contenu": "Vérif",
+    "avant": null,
+    "apres": null,
+    "commentaires": [],
+    "resolution": null
   }
 }

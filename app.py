@@ -1,7 +1,12 @@
 """
 Gestionnaire de logs de simulation ATC
-Backend Flask — stockage en fichiers JSON, authentification par session,
-isolation stricte par centre et filtrage des données selon le profil.
+Backend Flask — stockage des logs de simulation au format .simlog, authentification
+par session, isolation stricte par centre et filtrage des données selon le profil.
+
+Les logs de simulation sont stockés au format .simlog (schéma natif
+instructor_log / pilot_logs / properties), complété par une enveloppe applicative
+"logsim" (centre, id, version, contenu pédagogique éventuel). Une couche de
+normalisation reconstruit un modèle de rendu commun pour les vues et templates.
 
 Code by @VUYCharles
 """
@@ -21,6 +26,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 SIM_DIR = os.path.join(DATA_DIR, "simulations")
+
+# Extension des logs de simulation (remplace l'ancien .json)
+SIM_EXT = ".simlog"
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-a-changer-en-production")
@@ -69,21 +77,130 @@ def save_audit(audit):
     _save(os.path.join(DATA_DIR, "audit.json"), audit)
 
 def load_simulation(sim_id):
-    path = os.path.join(SIM_DIR, f"{sim_id}.json")
+    """Charge un .simlog et renvoie le modèle de rendu normalisé."""
+    raw = load_simulation_raw(sim_id)
+    if raw is None:
+        return None
+    return normalize_simulation(raw, sim_id)
+
+
+def load_simulation_raw(sim_id):
+    """Charge le contenu brut du fichier .simlog (schéma natif + enveloppe)."""
+    path = os.path.join(SIM_DIR, f"{sim_id}{SIM_EXT}")
     if not os.path.exists(path):
         return None
     return _load(path)
 
-def save_simulation(sim_id, data):
-    _save(os.path.join(SIM_DIR, f"{sim_id}.json"), data)
+
+def save_simulation_raw(sim_id, data):
+    _save(os.path.join(SIM_DIR, f"{sim_id}{SIM_EXT}"), data)
+
 
 def list_simulations():
+    """Liste les simulations sous forme de modèles normalisés."""
     sims = []
-    for path in sorted(glob.glob(os.path.join(SIM_DIR, "*.json"))):
-        data = _load(path)
-        if data:
-            sims.append(data)
+    for path in sorted(glob.glob(os.path.join(SIM_DIR, f"*{SIM_EXT}"))):
+        if ".bak" in os.path.basename(path):
+            continue
+        raw = _load(path)
+        if raw:
+            sim_id = os.path.splitext(os.path.basename(path))[0]
+            sims.append(normalize_simulation(raw, sim_id))
     return sims
+
+
+# ---------------------------------------------------------------------------
+# Normalisation .simlog -> modèle de rendu commun
+# ---------------------------------------------------------------------------
+def _infer_type(description):
+    """Devine un type d'événement (cosmétique : pilote la couleur d'affichage)."""
+    d = (description or "").upper()
+    if any(k in d for k in ("ALERTE", "URGENCE", "BOMBE", "MENACE", "COLLISION")):
+        return "ambiance"
+    if "*RADIO" in d or "RADIO" in d:
+        return "avion_message"
+    if "*APPEL" in d or "*TEL" in d or "TEL " in d or "TÉL" in d:
+        return "telephone_entrant"
+    if any(k in d for k in ("PANNE", "GIVRAGE", "LARGU", " TO ", "TO ", "DECO")):
+        return "avion_action"
+    return "avion_message"
+
+
+def _time_key(t):
+    """Clé de tri à partir d'une heure 'HH:MM' ou 'HH:MM:SS'."""
+    try:
+        parts = [int(p) for p in (t or "").split(":")]
+        while len(parts) < 3:
+            parts.append(0)
+        return (0, parts[0], parts[1], parts[2])
+    except (ValueError, AttributeError):
+        return (1, 0, 0, 0)  # heures invalides en fin de liste
+
+
+def _timeline_from_pilot_logs(raw):
+    """Construit une timeline chronologique unifiée à partir des pilot_logs."""
+    evenements = []
+    for log in raw.get("pilot_logs", []):
+        role = log.get("role", "")
+        for ev in log.get("events", []):
+            evenements.append({
+                "t": ev.get("time", ""),
+                "acteur": ev.get("callsign", ""),
+                "role": role,
+                "type": _infer_type(ev.get("description", "")),
+                "frequence": None,
+                "contenu": ev.get("description", ""),
+                "attendu": None,
+                "note_pedago": None,
+            })
+    evenements.sort(key=lambda e: _time_key(e["t"]))
+    return evenements
+
+
+def normalize_simulation(raw, sim_id):
+    """
+    Reconstruit un modèle de rendu commun, que la simulation soit un .simlog natif
+    (LFBO) ou un .simlog issu d'un ancien log pédagogique converti.
+    """
+    env = raw.get("logsim", {}) or {}
+    props = raw.get("properties", {}) or {}
+
+    model = {
+        "id": env.get("id", sim_id),
+        "titre": props.get("name") or env.get("id") or sim_id,
+        "centre": env.get("centre"),
+        "terrain": env.get("terrain") or env.get("centre"),
+        "position": env.get("position") or "—",
+        "version": env.get("version", 1),
+        "date_creation": env.get("date_creation") or props.get("start_date"),
+        "date_modification": env.get("date_modification") or props.get("update_date"),
+        "duree_estimee_min": props.get("duration") or 0,
+        "difficulte": env.get("difficulte") or "Non précisé",
+        "meteo": props.get("weather") or "",
+        "description": props.get("description") or "",
+        "objectives": props.get("objectives") or "",
+        "flight_count": props.get("flightCount"),
+        "categorie": env.get("categorie"),
+        "instructor_log": raw.get("instructor_log") or {},
+        "attendus_pedagogiques": [],
+        "evenements": [],
+    }
+
+    if env.get("evenements") is not None:
+        # Log pédagogique converti : on conserve la timeline d'origine (riche)
+        for ev in env["evenements"]:
+            ev = dict(ev)
+            ev.setdefault("role", None)
+            model["evenements"].append(ev)
+        model["attendus_pedagogiques"] = env.get("attendus_pedagogiques", [])
+    else:
+        # .simlog natif : timeline reconstruite depuis les pilot_logs
+        model["evenements"] = _timeline_from_pilot_logs(raw)
+        model["attendus_pedagogiques"] = [
+            l.strip() for l in (props.get("objectives") or "").splitlines() if l.strip()
+        ]
+
+    return model
 
 
 # ---------------------------------------------------------------------------
@@ -162,6 +279,10 @@ def filter_simulation_for_role(sim, role):
         return sim
     clean = dict(sim)
     clean.pop("attendus_pedagogiques", None)
+    # Briefing et notes instructeur masqués aux pilotes
+    clean["description"] = ""
+    clean["objectives"] = ""
+    clean["instructor_log"] = {}
     clean["evenements"] = []
     for ev in sim.get("evenements", []):
         ev_clean = dict(ev)
@@ -442,35 +563,43 @@ def admin_dashboard():
 @app.route("/admin/edit/<sim_id>", methods=["GET", "POST"])
 @role_required("admin")
 def admin_edit(sim_id):
-    sim = load_simulation(sim_id)
-    if not sim:
+    raw = load_simulation_raw(sim_id)
+    if raw is None:
         abort(404)
     ticket_id = request.args.get("ticket")
 
     if request.method == "POST":
-        raw = request.form.get("contenu_json", "")
+        contenu = request.form.get("contenu_json", "")
         try:
-            new_data = json.loads(raw)
+            new_data = json.loads(contenu)
         except json.JSONDecodeError as e:
             flash(f"JSON invalide : {e}", "error")
             return render_template("admin_edit.html", sim_id=sim_id,
-                                   contenu_json=raw, ticket_id=ticket_id)
-        old_version = sim.get("version", 1)
-        new_data["version"] = old_version + 1
-        new_data["date_modification"] = datetime.now().isoformat(timespec="seconds")
-        backup_path = os.path.join(SIM_DIR, f"{sim_id}.v{old_version}.bak.json")
-        _save(backup_path, sim)
-        save_simulation(sim_id, new_data)
+                                   contenu_json=contenu, ticket_id=ticket_id)
 
+        env = new_data.setdefault("logsim", {})
+        old_env = raw.get("logsim", {}) or {}
+        old_version = old_env.get("version", 1)
+        now = datetime.now().isoformat(timespec="seconds")
+        env["version"] = old_version + 1
+        env["date_modification"] = now
+        if isinstance(new_data.get("properties"), dict):
+            new_data["properties"]["update_date"] = now
+
+        backup_path = os.path.join(SIM_DIR, f"{sim_id}.v{old_version}.bak{SIM_EXT}")
+        _save(backup_path, raw)
+        save_simulation_raw(sim_id, new_data)
+
+        new_version = env["version"]
         audit = load_audit()
         audit.append({
-            "date": datetime.now().isoformat(timespec="seconds"),
+            "date": now,
             "admin": current_user()["username"],
             "simulation_id": sim_id,
-            "action": "modification JSON",
+            "action": "modification .simlog",
             "ticket_id": request.form.get("ticket_id") or None,
             "version_avant": old_version,
-            "version_apres": new_data["version"],
+            "version_apres": new_version,
         })
         save_audit(audit)
 
@@ -479,13 +608,13 @@ def admin_edit(sim_id):
             tickets = load_tickets()
             if linked in tickets:
                 tickets[linked]["statut"] = "resolu"
-                tickets[linked]["resolution"] = f"Appliqué dans la version {new_data['version']}."
+                tickets[linked]["resolution"] = f"Appliqué dans la version {new_version}."
                 save_tickets(tickets)
 
-        flash(f"Simulation {sim_id} enregistrée (version {new_data['version']}).", "success")
+        flash(f"Simulation {sim_id} enregistrée (version {new_version}).", "success")
         return redirect(url_for("admin_dashboard"))
 
-    contenu_json = json.dumps(sim, ensure_ascii=False, indent=2)
+    contenu_json = json.dumps(raw, ensure_ascii=False, indent=2)
     return render_template("admin_edit.html", sim_id=sim_id,
                            contenu_json=contenu_json, ticket_id=ticket_id)
 

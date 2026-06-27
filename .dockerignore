@@ -1,6 +1,6 @@
 __pycache__/
 *.pyc
-*.bak.json
+*.bak.simlog
 .git/
 .venv/
 venv/

@@ -1,0 +1,295 @@
+{
+  "instructor_log": {},
+  "pilot_logs": [
+    {
+      "role": "PILOTADJE",
+      "events": [
+        {
+          "callsign": "CLG8105",
+          "description": "LFCK LFPO *TEL deja mis en route, appel CK vers AE CLR (FINOT) 1400TO",
+          "time": "13:57"
+        },
+        {
+          "callsign": "CLG8105",
+          "description": "LFCK LFPO 1400 TO",
+          "time": "14:00"
+        },
+        {
+          "callsign": "EAP39A",
+          "description": "LFMP LFMK *TEL FA appel AE 'AEROPYR vers ORBIL 5000ft qnh1013?'",
+          "time": "13:55"
+        },
+        {
+          "callsign": "EAP39A",
+          "description": "LFMP LFMK *RADIO ' TLSE APP, nos intentions à MK : poser puis départ vers CK avec indicatif EAP39B...",
+          "time": "14:04"
+        },
+        {
+          "callsign": "NAK239",
+          "description": "LFMK LFBR *TEL LFMK(LFCC..) vers AE ' mise en route'  1440TO",
+          "time": "14:34"
+        },
+        {
+          "callsign": "NAK239",
+          "description": "LFMK LFBR *TEL CLR pour depart (FPL GALDO3E 4000) 1440TO",
+          "time": "14:37"
+        },
+        {
+          "callsign": "NAK239",
+          "description": "LFMK LFBR 1440TO",
+          "time": "14:40"
+        },
+        {
+          "callsign": "FGBRD",
+          "description": "LFCL LFBR  *TEL LFCL appel AE, Mise en route 1623 TO",
+          "time": "14:05"
+        },
+        {
+          "callsign": "FGBRD",
+          "description": "LFCL LFBR  *TEL LFCL vers AE 'CLR (Omni GAI 3000?) ' 1410 TO",
+          "time": "14:07"
+        },
+        {
+          "callsign": "FGBRD",
+          "description": "LFCL LFBR 1410 TO",
+          "time": "14:10"
+        },
+        {
+          "callsign": "FHDAR",
+          "description": "LFMT LFBT *TEL FA vers AE 'pour coordonner transit FL100 AFRIC FINOT'",
+          "time": "14:13"
+        },
+        {
+          "callsign": "EAP39B",
+          "description": "LFMK LFCK *TEL LFMK  vers AE pour CLR (masam3E fl70?) 1429 TO",
+          "time": "14:26"
+        },
+        {
+          "callsign": "NAK524",
+          "description": "LFCK LFDH *TEL CK vers AE 'mise en route' 1435 TO",
+          "time": "14:28"
+        },
+        {
+          "callsign": "NAK524",
+          "description": "LFCK LFDH *TEL LFCK vers AE 'CLR TO 1435 prévu en fonction de EAP39B omni FINOT' si FL60 AT A060",
+          "time": "14:30"
+        },
+        {
+          "callsign": "NAK524",
+          "description": "LFCK LFDH TO en fonction de EAP39B",
+          "time": "14:34"
+        },
+        {
+          "callsign": "AIB05BZ",
+          "description": "LFBO LFBO *TEL LOC vers AE 'pour coordonner AIB05BZ: 1 circuits rouges. Tu me fais une place en 14R pour décoller stp?'",
+          "time": "14:30"
+        },
+        {
+          "callsign": "FHDAR",
+          "description": "LFMT LFBT *RADIO passant FNOT 'demandons à descendre au FL70 cause turbulences'",
+          "time": "14:20"
+        },
+        {
+          "callsign": "AIB05BZ",
+          "description": "LFBO LFBO en fonction des finales 1436TO",
+          "time": "14:36"
+        },
+        {
+          "callsign": "EAP39B",
+          "description": "LFMK LFCK 1429TO",
+          "time": "14:29"
+        },
+        {
+          "callsign": "EAP39A",
+          "description": "LFMP LFMK '... Vous avez bien notre PLN?'",
+          "time": "14:04"
+        },
+        {
+          "callsign": "EAP39B",
+          "description": "LFMK LFCK misen route 1429TO",
+          "time": "14:22"
+        },
+        {
+          "callsign": "EAP39B",
+          "description": "PANNE RADIO ne pas de contacter  monter FL70 sans clairance 'GJ7600 ne fonctionne pas encore'",
+          "time": "14:28"
+        },
+        {
+          "callsign": "EAP39B",
+          "description": "PANNE RADIO Fin de panne contact AW",
+          "time": "14:35"
+        },
+        {
+          "callsign": "NAK239",
+          "description": "BROUILLAGE RNAV *RADIO 'on ne pas poursuivre pour la RNP12 on a besoin de guidage pour la NDB12, on a un flag sur le GPS'",
+          "time": "14:49"
+        }
+      ]
+    },
+    {
+      "role": "PILOTADJW",
+      "events": [
+        {
+          "callsign": "FMY8051",
+          "description": "LFBF LFRN 1358 TO et appel(clairé FPL 3000ftTW1A)",
+          "time": "13:57"
+        },
+        {
+          "callsign": "FHNJD",
+          "description": "LFBT LFMT *TEL LFBP 'coordonner FHNJD, transit TOU AFRIC FL90?'",
+          "time": "13:56"
+        },
+        {
+          "callsign": "CTM2056",
+          "description": "LFBF LFOJ *TEL LFBF tel AW 'CLR TLF1A ? ne pas mentionner d'altitude) 1423 TO",
+          "time": "14:20"
+        },
+        {
+          "callsign": "CTM2056",
+          "description": "LFBF LFOJ *TELmise en route 1423 TO",
+          "time": "14:17"
+        },
+        {
+          "callsign": "CCM320N",
+          "description": "DEP LFBO *TEL LOC vers AW 'Corsica 320N tu l'acceptes en FISTO7H vers FL70?' (pas de de refus possible..)",
+          "time": "14:24"
+        },
+        {
+          "callsign": "FMY8051",
+          "description": "LFBF LFRN dejà clairé TW1A 3000 1358 TO",
+          "time": "13:55"
+        },
+        {
+          "callsign": "CTM2056",
+          "description": "LFBF LFOJ  1423TO",
+          "time": "14:23"
+        }
+      ]
+    },
+    {
+      "role": "PILOTAE1",
+      "events": [
+        {
+          "callsign": "EZY38ZH",
+          "description": "QNH 1013 14 BO, SAT face est 09 11 12 etc, ITM à AW",
+          "time": "13:47"
+        },
+        {
+          "callsign": "AFR1714",
+          "description": "Attention touche LFMK ,FA ,FE, H.S remplacer par LFCC",
+          "time": "13:47"
+        },
+        {
+          "callsign": "RYR7LY",
+          "description": "LFMK EBCI 1440TO",
+          "time": "14:40"
+        },
+        {
+          "callsign": "RYR7LY",
+          "description": "LFMK EBCI *TEL LFMK vers AE 'CLR pour RYR7LY(FPL GALDO3E 5000)' 1440TO (si FL70: AT A70)",
+          "time": "14:38"
+        },
+        {
+          "callsign": "RYR7LY",
+          "description": "LFMK EBCI *TEL 'mise en route' 1440TO",
+          "time": "14:34"
+        },
+        {
+          "callsign": "DLH02W",
+          "description": "PANNE RADIO pour DLH07W dep LFBO ne passe répondre monter FL70 pallier 3min au FL70",
+          "time": "13:58"
+        },
+        {
+          "callsign": "DLH02W",
+          "description": "PANNE RADIO monter FL300 sans contact",
+          "time": "14:04"
+        },
+        {
+          "callsign": "BAW4DP",
+          "description": "MINIMUM FUEL 'declaring minimum fuel' 'si demande pas d'urgence'",
+          "time": "14:27"
+        },
+        {
+          "callsign": "DLH02W",
+          "description": "PANNE RADIO afficher TMC7600",
+          "time": "14:02"
+        },
+        {
+          "callsign": "BEL29D",
+          "description": "ORAGE EVITEMENT  'request rigth turn do to weather hdg 270'",
+          "time": "14:33"
+        },
+        {
+          "callsign": "BEL29D",
+          "description": "ORAGE EVITEMENT tous les avions evitent la masse entre FUZAP et l'OUEST de FUZAP 20nm",
+          "time": "14:34"
+        }
+      ]
+    },
+    {
+      "role": "PILOTAE2",
+      "events": []
+    },
+    {
+      "role": "PILOTAW1",
+      "events": [
+        {
+          "callsign": "ACA878",
+          "description": "SUSPICION PANNE VOLET *RADIO 'ACA878 we would like to wait at SURAS for check regarding flap alarm keep you advised'",
+          "time": "14:12"
+        },
+        {
+          "callsign": "ACA878",
+          "description": "SUSPICION PANNE VOLET  'alarm checked problem solved we can resume approach'",
+          "time": "14:25"
+        },
+        {
+          "callsign": "ABR3LS",
+          "description": "ORAGE EVIT *RADIO 'contract3ls cap 320 pour evitter la masse'",
+          "time": "14:35"
+        },
+        {
+          "callsign": "SWT5614",
+          "description": "ORAGE EVIT *RADIO 'swift requesting heading 310 to avoid weather'",
+          "time": "14:56"
+        }
+      ]
+    },
+    {
+      "role": "PILOTAW2",
+      "events": []
+    },
+    {
+      "role": "PILOTITM",
+      "events": []
+    },
+    {
+      "role": "PILOTSIV",
+      "events": []
+    }
+  ],
+  "properties": {
+    "configuration": "",
+    "description": "distribution layout: AW AE 5 PIL (ITM à AW)\r\nRelève à 40 min: 1_IL relève Ast AE 2_qui relève AW 3_qui relève Ast AW 4_qui relève AE 5_qui relève Ast AE\r\nMinimum fuel sans urgence, 2 pannes radio IFR en condition IMC, probleme de voyant Flaps sans urgence, brouillage RNAV, Orage évitement",
+    "duration": 120,
+    "start_date": "2024-11-05T13:47:37Z",
+    "objectives": "",
+    "name": "AWAE14L2F",
+    "traffic_density": 0,
+    "update_date": "2026-03-12T16:49:54Z",
+    "weather": "WX_DATA_FSAU2.weather",
+    "flightCount": 111
+  },
+  "logsim": {
+    "id": "AWAE14L2F",
+    "centre": "LFBO",
+    "terrain": "LFBO",
+    "position": "Pseudo-pilotes (ADJE, ADJW, AE1, AW1)",
+    "difficulte": "Non précisé",
+    "version": 1,
+    "categorie": "FSAU",
+    "date_creation": "2024-11-05T13:47:37Z",
+    "date_modification": "2026-03-12T16:49:54Z",
+    "source_format": "simlog-natif-v1"
+  }
+}

@@ -1,12 +1,12 @@
 {
   "LFPG": {
-    "password": "demo"
+    "password_hash": "scrypt:32768:8:1$pB1wHRi3jMaCjY8C$40309bb4a6c4623c905ae3d8f7e09e06beaa4a94f7ad970cd406aa8980115432cf4a3af80f90fc1576d215b1124a6713edbb768069cabce1771aaef5a66ea61c"
   },
   "LFBO": {
-    "password": "demo"
+    "password_hash": "scrypt:32768:8:1$PJgzCdG9loRAMfll$f545e881b0e33f65032af846b93fb25065a9c65cf446d974e3bb9d507676191486dd7b46bfb5be77444ad7fa61225d42da135fc959e227fb5607be607214c37b"
   },
   "admin": {
     "role": "admin",
-    "password": "demo"
+    "password_hash": "scrypt:32768:8:1$yKcX1t0pByk0rc6s$c14cbc87a9726d53f237eed7737638cc90371a7beb526f103757305349d90644f9aada0db3fd25d2af28b4c93ccf6fb0bc930e08673a53a148b11360e2667712"
   }
 }

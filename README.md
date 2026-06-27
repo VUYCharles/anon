@@ -15,7 +15,6 @@ docker compose up -d --build
 (`LFPG`, `LFBO`…), puis on choisit son rôle pour la session : **pilote** ou
 **instructeur**. Un compte `admin` séparé donne accès à tous les centres.
 
-
 > **Changer les mots de passe :** éditer `data/users.json`, remettre un champ
 > `password` en clair, redémarrer le conteneur. Le mot de passe est haché
 > automatiquement au démarrage et le champ en clair disparaît.
@@ -27,7 +26,7 @@ docker compose up -d --build
 | Déroulé radio | ✔ | ✔ | ✔ |
 | Attendus + notes pédago | ✗ | ✔ | ✔ |
 | Tickets | ✗ | ✔ | ✔ |
-| Édition JSON / tous centres | ✗ | ✗ | ✔ |
+| Édition `.simlog` / tous centres | ✗ | ✗ | ✔ |
 
 Le filtrage pédagogique est appliqué **côté serveur** : un pilote ne reçoit
 jamais les attendus, même en inspectant la page.
@@ -36,9 +35,31 @@ jamais les attendus, même en inspectant la page.
 
 1. Ajouter le centre dans `data/centres.json`
 2. Ajouter le compte dans `data/users.json`
-3. Déposer les simulations dans `data/simulations/<CODE>-<NUM>.json`
+3. Déposer les logs de simulation dans `data/simulations/<id>.simlog`
 
 ## Données
 
-Tout est en fichiers JSON dans `data/` (monté en volume Docker). C'est le
-seul dossier à sauvegarder.
+Tout est en fichiers dans `data/` (monté en volume Docker), seul dossier à
+sauvegarder. Les comptes, centres, tickets et journal d'audit restent en `.json` ;
+les **logs de simulation sont au format `.simlog`** dans `data/simulations/`.
+
+### Format `.simlog`
+
+Un `.simlog` est un fichier JSON au schéma natif du simulateur :
+
+- `instructor_log` : notes instructeur (objet, souvent vide) ;
+- `pilot_logs` : liste de positions pseudo-pilotes `{ role, events[] }`, chaque
+  événement étant `{ callsign, description, time }` ;
+- `properties` : métadonnées du scénario (`name`, `description`, `duration`,
+  `start_date`, `update_date`, `weather`, `flightCount`…).
+
+À cela s'ajoute une **enveloppe applicative `logsim`** propre à Simlog, qui
+porte ce dont l'application a besoin et qui n'existe pas dans le schéma natif :
+`id`, `centre` (cloisonnement), `terrain`, `position`, `difficulte`, `version`,
+`categorie`, et — pour les logs pédagogiques convertis depuis l'ancien format
+`.json` — la timeline pédagogique complète (`evenements` avec `attendu` /
+`note_pedago`) et les `attendus_pedagogiques`.
+
+À l'affichage, une couche de normalisation reconstruit une timeline commune :
+soit depuis `logsim.evenements` (logs pédagogiques), soit en fusionnant et triant
+chronologiquement les `pilot_logs` (logs natifs).

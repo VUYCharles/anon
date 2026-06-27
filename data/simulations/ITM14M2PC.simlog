@@ -1,0 +1,79 @@
+{
+  "instructor_log": {},
+  "pilot_logs": [
+    {
+      "role": "PILOTADJE",
+      "events": []
+    },
+    {
+      "role": "PILOTADJW",
+      "events": []
+    },
+    {
+      "role": "PILOTAE1",
+      "events": [
+        {
+          "callsign": "BAW4DP",
+          "description": "monter les départs (190 ou 300) ne pas contacter l'APP ATENTION à assurer les croisements depart arrivée",
+          "time": "14:09"
+        }
+      ]
+    },
+    {
+      "role": "PILOTAE2",
+      "events": []
+    },
+    {
+      "role": "PILOTAW1",
+      "events": [
+        {
+          "callsign": "EJU4982",
+          "description": "appel de pilot1 LOC à AE 'EJU4992 RMG app non stabilisée, 4000  STD' action  dans le pln mais vérifier attention au dep",
+          "time": "14:37"
+        }
+      ]
+    },
+    {
+      "role": "PILOTAW2",
+      "events": []
+    },
+    {
+      "role": "PILOTITM",
+      "events": []
+    },
+    {
+      "role": "PILOTSIV",
+      "events": [
+        {
+          "callsign": "FHMTB",
+          "description": "ITM14 QNH1013 régulation faite par l'ini, livré en CAP fFL vitesse, contact itm 118.1",
+          "time": "14:09"
+        }
+      ]
+    }
+  ],
+  "properties": {
+    "configuration": "",
+    "description": "17 vols k3' 1 RMG EJU4982\r\ndistribution layout ITM 2 PIL",
+    "duration": 180,
+    "start_date": "2024-05-23T14:07:34Z",
+    "objectives": "",
+    "name": "ITM14M2PC",
+    "traffic_density": 0,
+    "update_date": "2026-03-12T16:49:54Z",
+    "weather": "",
+    "flightCount": 52
+  },
+  "logsim": {
+    "id": "ITM14M2PC",
+    "centre": "LFBO",
+    "terrain": "LFBO",
+    "position": "Pseudo-pilotes (AE1, AW1, SIV)",
+    "difficulte": "Non précisé",
+    "version": 1,
+    "categorie": "ITM",
+    "date_creation": "2024-05-23T14:07:34Z",
+    "date_modification": "2026-03-12T16:49:54Z",
+    "source_format": "simlog-natif-v1"
+  }
+}

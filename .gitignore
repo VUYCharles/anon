@@ -3,7 +3,7 @@
 *.pub
 *.conf
 data/*.tmp
-data/simulations/*.bak.json
+data/simulations/*.bak.simlog
 __pycache__/
 *.pyc
 .env

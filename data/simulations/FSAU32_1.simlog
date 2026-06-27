@@ -1,0 +1,331 @@
+{
+  "instructor_log": {},
+  "pilot_logs": [
+    {
+      "role": "PILOTADJE",
+      "events": [
+        {
+          "callsign": "ITI508A",
+          "description": "LFPB vers LFCK *appel LC vers AE 'ITI508A pour toi il voudrait rester au cap et plus bas?'",
+          "time": "15:18"
+        },
+        {
+          "callsign": "FNY5566",
+          "description": "LFLW LFBT *appel LC vers APP ' TOU FL140 ça te va?'",
+          "time": "15:09"
+        },
+        {
+          "callsign": "FHDGO",
+          "description": "LFMK LFMT *appel ' clairance FHDGO (FJR3E) ' (38)",
+          "time": "14:34"
+        },
+        {
+          "callsign": "FHDGO",
+          "description": "LFMK LFMT *appel  MK vers  AE 'FHDGO mise en route ' (38)",
+          "time": "14:29"
+        },
+        {
+          "callsign": "FHDGO",
+          "description": "LFMK LFMT TO (38)",
+          "time": "14:38"
+        },
+        {
+          "callsign": "EAP37A",
+          "description": "LFMP LFMK *appel  FA vers AE 'AEROPYRENE37A vers ORBIL 5000ft ?'",
+          "time": "14:33"
+        },
+        {
+          "callsign": "CTM1312",
+          "description": "LFMK LFMI TO (57)",
+          "time": "14:57"
+        },
+        {
+          "callsign": "CTM1312",
+          "description": "LFMK LFMI *appel ' clairance (FJR3W) ' (57)",
+          "time": "14:54"
+        },
+        {
+          "callsign": "CTM1312",
+          "description": "LFMK LFMI*appel  MK vers  AE 'mise en route ' (57)",
+          "time": "14:50"
+        },
+        {
+          "callsign": "NJE807E",
+          "description": "LFCK LFPB *appel  CK vers  AE ' mise en route ' (40)",
+          "time": "14:31"
+        },
+        {
+          "callsign": "NJE807E",
+          "description": "LFCK LFPB *appel ' clairance (FINOT en 32)' (40)",
+          "time": "14:37"
+        },
+        {
+          "callsign": "NJE807E",
+          "description": "LFCK LFPB TO (40)",
+          "time": "14:40"
+        },
+        {
+          "callsign": "NAK524",
+          "description": "LFMT LFBR *appel FA(LFCC..) vers AE 'NAK524 sur GAI fl80'",
+          "time": "15:01"
+        },
+        {
+          "callsign": "FAF9210",
+          "description": "TRANSIT vol auto *appel BP vers AW 'on peut écorner ta zone et descendre FAF9210 ?'",
+          "time": "14:28"
+        },
+        {
+          "callsign": "FMY8528",
+          "description": "LFBP LFCK *appel BP vers AW'TOU 5000ft?'",
+          "time": "15:00"
+        },
+        {
+          "callsign": "NAK293B",
+          "description": "LFBP LFBR *appel BP vers AW ' SURUD fl70?'",
+          "time": "15:10"
+        }
+      ]
+    },
+    {
+      "role": "PILOTADJW",
+      "events": [
+        {
+          "callsign": "CTM2085",
+          "description": "PARA FONSORBES au 1er contact, préciser 'pour 5 circuits longs'",
+          "time": "14:08"
+        },
+        {
+          "callsign": "OYNZC",
+          "description": "LFBF EKSB *clairance (SURAS3W) ' (22)",
+          "time": "15:18"
+        },
+        {
+          "callsign": "OYNZC",
+          "description": "LFBF EKSB *mise en route ' (22)",
+          "time": "15:13"
+        },
+        {
+          "callsign": "NAK507",
+          "description": "LFBT LFBR * appel BP vers APP 'une arrivée Muret 70 xurex c'est bon?'",
+          "time": "14:09"
+        },
+        {
+          "callsign": "NAK502",
+          "description": "LFBR LFBT *appel BR vers AW ' clairance NAK502 (DODOM) ' (15)",
+          "time": "14:11"
+        },
+        {
+          "callsign": "NAK502",
+          "description": "LFBR LFBT *appel BR vers  AW 'NAK502 mise en route ' (15)",
+          "time": "14:08"
+        },
+        {
+          "callsign": "NAK502",
+          "description": "LFBR LFBT TO (15)",
+          "time": "14:15"
+        },
+        {
+          "callsign": "FGTEF",
+          "description": "LFBA LFBT *appel BA vers AW FGTEF 'mise en route' TO(16)",
+          "time": "14:09"
+        },
+        {
+          "callsign": "FGTEF",
+          "description": "LFBA LFBT *appel BA vers AW  'clairance AUCHE2W FL70?' TO(16)",
+          "time": "14:13"
+        },
+        {
+          "callsign": "FGTEF",
+          "description": "LFBA LFBT TO  (16)",
+          "time": "14:16"
+        },
+        {
+          "callsign": "CTM2085",
+          "description": "PARA FONTSORBES vol auto jusqu'à instruction controle",
+          "time": "14:05"
+        },
+        {
+          "callsign": "CTM2085",
+          "description": "PARA FONSORBES *radio 'fin de larguage on rentre à Francazal 'se poser à vue",
+          "time": "14:44"
+        },
+        {
+          "callsign": "OYNZC",
+          "description": "TO 22",
+          "time": "15:22"
+        },
+        {
+          "callsign": "NAK522",
+          "description": "LFBE LFBR *appel BD vers AW 'SECHE FL70'",
+          "time": "15:00"
+        },
+        {
+          "callsign": "EZE021P",
+          "description": "LFBF EGNJ *appel  BF vers  AW ' mise en route ' (18)",
+          "time": "15:10"
+        },
+        {
+          "callsign": "EZE021P",
+          "description": "LFBF EGNJ *appel  BF vers  AW ' clairance (SURAS 2W)' (18)",
+          "time": "15:15"
+        },
+        {
+          "callsign": "EZE021P",
+          "description": "TO 18",
+          "time": "15:18"
+        }
+      ]
+    },
+    {
+      "role": "PILOTAE1",
+      "events": []
+    },
+    {
+      "role": "PILOTAE2",
+      "events": [
+        {
+          "callsign": "DLH27N",
+          "description": "COLLISION AVIAIRE LFBO EDDM *appel LOC vers AE 'DLH27N ingestion d'oiseau aprés décollage..' voir log",
+          "time": "14:16"
+        },
+        {
+          "callsign": "DLH27N",
+          "description": "COLLISION AVIAIRE 'Toulouse approach DLH27N we are able to turn downwind to land, request vector 32L'",
+          "time": "14:20"
+        },
+        {
+          "callsign": "DLH27N",
+          "description": "COLLISION AVIAIRE poursuivre au cap 3 min stoper 3000ft faible taux (500ft min) vitesse 210kts",
+          "time": "14:16"
+        },
+        {
+          "callsign": "DLH27N",
+          "description": "COLLISION AVIAIRE retour voir log",
+          "time": "14:20"
+        },
+        {
+          "callsign": "DLH27N",
+          "description": "COLLISION AVIAIRE MAYDAY MAYDAY (intention 10 nm 3000ft)",
+          "time": "14:27"
+        },
+        {
+          "callsign": "DLH27N",
+          "description": "COLLISION AVIAIRE appel CDT vers AE 'posé et dégagé' voir log",
+          "time": "14:36"
+        },
+        {
+          "callsign": "DLH27N",
+          "description": "COLLISION AVIAIRE appel CDT'inspection terminé tu peux reprendre 32L' voir log",
+          "time": "14:41"
+        }
+      ]
+    },
+    {
+      "role": "PILOTAW1",
+      "events": [
+        {
+          "callsign": "AFR27BH",
+          "description": "ORAGE EVITEMENT^*radio 'on voudrait prendre 20 degres gauche pour éviter une masse'",
+          "time": "15:09"
+        }
+      ]
+    },
+    {
+      "role": "PILOTAW2",
+      "events": [
+        {
+          "callsign": "RYR1482",
+          "description": "PROBLEME TECHNIQUE BORD  *appel LOC vers AW 'inspection piste 32L faite rien à signaler'",
+          "time": "15:06"
+        },
+        {
+          "callsign": "RYR1482",
+          "description": "PROBLEME TECHNIQUE BORD LFBO LIPE *appel LOC vers AW 'on a un soucis avec le RYR1482 qui ne peut pas rentrer son train..voir log",
+          "time": "15:02"
+        },
+        {
+          "callsign": "RYR1482",
+          "description": "PROBLEME TECHNIQUE BORD 'PANPANPAN after checks we need to come back to land and requesting ILS32L with firemen on arrival'",
+          "time": "15:06"
+        },
+        {
+          "callsign": "RYR1482",
+          "description": "PROBLEME TECHNIQUE BORD suite 'il te contacte pour évaluer la situation on le stabilise 4000 dans l'axe et te l'envoie'",
+          "time": "15:03"
+        },
+        {
+          "callsign": "RYR1482",
+          "description": "PROBLEME TECHNIQUE BORD *radio 'RYR1482 hello we need to check our gear system. Gear is still down and we request to hold...'",
+          "time": "15:03"
+        },
+        {
+          "callsign": "RYR1482",
+          "description": "PROBLEME TECHNIQUE BORD  avion posé dégagé tu peux ramener en 32L",
+          "time": "15:10"
+        },
+        {
+          "callsign": "RYR1482",
+          "description": "PROBLEME TECHNIQUE BORD suite  '...suspecting oil leak'",
+          "time": "15:07"
+        },
+        {
+          "callsign": "RIV153",
+          "description": "PANNE RADIO  pas de contact radio stabiliser FL150 voir log",
+          "time": "14:38"
+        },
+        {
+          "callsign": "RIV153",
+          "description": "PANNE RADIO transpondeur RADIODOFF:TMC 7600",
+          "time": "14:43"
+        },
+        {
+          "callsign": "RIV153",
+          "description": "PANNE RADIO attendre à SULIT 8 min FL150",
+          "time": "14:43"
+        },
+        {
+          "callsign": "RIV153",
+          "description": "PANNE RADIO 8 min aprés entrée descent FL80 débuter l'approche standard BO602",
+          "time": "14:51"
+        },
+        {
+          "callsign": "RIV153",
+          "description": "PANNE RADIO *radio Toulouse aprproche vous me recevez?'",
+          "time": "14:58"
+        }
+      ]
+    },
+    {
+      "role": "PILOTITM",
+      "events": []
+    },
+    {
+      "role": "PILOTSIV",
+      "events": []
+    }
+  ],
+  "properties": {
+    "configuration": "",
+    "description": "FSAU en 32 AW/AE/ITM dégroupés début à 14h09 RELEVE à 14H58 (geler pour relever pause pilotes 10 min) fin à 15h35 QNH1005 \r\nCTM2085 sur le tableau 5 circuits Longs, Zones: terrains SAT, Fonsorbes, Caylus, R246, AW AE\r\nURGENCES: collision aviaire_panne radio, apres releve_PROBLEME technique train_orage FUZAP début à 14h10\r\nORAGE: base FL80_UNL 3 CB: largeur 20000m, position: LFDB-FUZAP et LFCI-FINOT\r\n(pour info vol deco en plus)",
+    "duration": 240,
+    "start_date": "2024-07-02T14:00:00Z",
+    "objectives": "",
+    "name": "FSAU32_1",
+    "traffic_density": 0,
+    "update_date": "2026-03-12T16:49:54Z",
+    "weather": "WX_DATA_TEST.weather",
+    "flightCount": 185
+  },
+  "logsim": {
+    "id": "FSAU32_1",
+    "centre": "LFBO",
+    "terrain": "LFBO",
+    "position": "Pseudo-pilotes (ADJE, ADJW, AE2, AW1, AW2)",
+    "difficulte": "Non précisé",
+    "version": 1,
+    "categorie": "FSAU",
+    "date_creation": "2024-07-02T14:00:00Z",
+    "date_modification": "2026-03-12T16:49:54Z",
+    "source_format": "simlog-natif-v1"
+  }
+}

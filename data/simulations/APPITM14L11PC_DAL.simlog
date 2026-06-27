@@ -1,0 +1,228 @@
+{
+  "instructor_log": {},
+  "pilot_logs": [
+    {
+      "role": "PILOTADJE",
+      "events": [
+        {
+          "callsign": "TJT1517",
+          "description": "LFML LFBO * TZ vers APP 'tu pourrais me donner plus bas (FL120) ?'",
+          "time": "08:46"
+        },
+        {
+          "callsign": "FHDGJ",
+          "description": "LFMT LFMK *tel FA vers APP '5000 IMK27 ça te va? (si demande de l'APP 4000ft possible)?'",
+          "time": "08:45"
+        },
+        {
+          "callsign": "FHDGH",
+          "description": "LFMK LFMT  *tel MK vers APP 'Mise en route'  (30)",
+          "time": "08:22"
+        },
+        {
+          "callsign": "FHDGH",
+          "description": "LFMK LFMT *tel MK vers APP : 'clairance FJR3E'  (30)",
+          "time": "08:27"
+        },
+        {
+          "callsign": "FHDGH",
+          "description": "LFMK LFMT   TO 30",
+          "time": "08:30"
+        },
+        {
+          "callsign": "CLG8102",
+          "description": "LFCK LFPO *tel  CK vers APP appel mise route (41)",
+          "time": "08:33"
+        },
+        {
+          "callsign": "NAK276B",
+          "description": "LFCR LFMK *tel  LC vers APP 'DEPES FL80?'",
+          "time": "08:50"
+        },
+        {
+          "callsign": "FHAMJ",
+          "description": "LECN LFCL intention pilote 'passer VFR en vue de Lasbordes et on repartira IFR dans la foulée'",
+          "time": "08:29"
+        },
+        {
+          "callsign": "NAK276A",
+          "description": "LFMK LFCR *tel MK vers  APP 'mise en route ' (39)",
+          "time": "08:32"
+        },
+        {
+          "callsign": "NAK276A",
+          "description": "LFMK LFCR *tel MK vers APP ' clairance MASAM3E ' (39)",
+          "time": "08:36"
+        },
+        {
+          "callsign": "NAK276A",
+          "description": "LFMK LFCR TO 39",
+          "time": "08:39"
+        },
+        {
+          "callsign": "RYR48QP",
+          "description": "LFMK EGSS *tel  MK vers  AE 'mise en route ' (53)",
+          "time": "08:45"
+        },
+        {
+          "callsign": "RYR48QP",
+          "description": "*LFMK EGSS *tel  MK vers APP ' clairance MASAM3E ' (53)",
+          "time": "08:50"
+        },
+        {
+          "callsign": "RYR48QP",
+          "description": "LFMK EGSS TO 53",
+          "time": "08:53"
+        },
+        {
+          "callsign": "FAF3113",
+          "description": "LFMK LFMP *tel  MK vers  APP 'FAF3113 mise en route ' (50) meme vol que FAF3112",
+          "time": "08:43"
+        },
+        {
+          "callsign": "FAF3113",
+          "description": "LFMK LFMP *tel  MK vers APP ' clairance sous indicatif FAF3112 PPG3E ' (50)",
+          "time": "08:48"
+        },
+        {
+          "callsign": "FAF3113",
+          "description": "LFMK LFMP TO 50 (aprés posé de FAF3112 meme vol decolle)",
+          "time": "08:50"
+        },
+        {
+          "callsign": "FHAMJ",
+          "description": "LFCL LFLH *tel CL vers  AE 'mise en route ' (55)",
+          "time": "08:46"
+        },
+        {
+          "callsign": "FHAMJ",
+          "description": "LFCL LFLH *tel CL vers AE ' clairance GAI15 ' (55)",
+          "time": "08:49"
+        },
+        {
+          "callsign": "FHAMJ",
+          "description": "LFCL LFLH TO 55",
+          "time": "08:55"
+        },
+        {
+          "callsign": "AIB09HI",
+          "description": "LFBO LFBO *tel  LOC vers APP 'AIB09HI voudra faire 1 circuits rouge 14 ( touch and go et circuit)'",
+          "time": "08:20"
+        },
+        {
+          "callsign": "FNY50D1",
+          "description": "LFCY LFMT *tel BD vers APP 'transit Frenchnavy50D1 pour Montpellier au FL140 direct AULON ca te va?'",
+          "time": "08:24"
+        },
+        {
+          "callsign": "CLG8102",
+          "description": "LFCK LFPO *tel  CK vers APP ' CLR (CK450 puis FINOT)?' (41)",
+          "time": "08:38"
+        },
+        {
+          "callsign": "CLG8102",
+          "description": "LFCK LFPO TO 41",
+          "time": "08:41"
+        }
+      ]
+    },
+    {
+      "role": "PILOTADJW",
+      "events": [
+        {
+          "callsign": "FMY8958",
+          "description": "LFDB LFCK TO 40 automatique",
+          "time": "08:40"
+        },
+        {
+          "callsign": "FGEVU",
+          "description": "LFBS LFBA *tel BD vers APP   'SECHE FL60 ca te va'",
+          "time": "08:47"
+        },
+        {
+          "callsign": "FMY8533",
+          "description": "LFBP LFBA *tel  BP vers APP '5000ft sur AGN ca te va?'",
+          "time": "08:51"
+        },
+        {
+          "callsign": "FAF3112",
+          "description": "LFTW LFMK *tel FA vers APP ' 5000ft ORBIL ça te va?'",
+          "time": "08:27"
+        },
+        {
+          "callsign": "NAK500",
+          "description": "LFBR LFCR *tel  BR vers  APP 'mise en route ' (52)",
+          "time": "08:44"
+        },
+        {
+          "callsign": "NAK500",
+          "description": "LFBR LF *tel BR vers APP ' clairance (omni XUREX) ' (52)",
+          "time": "08:49"
+        },
+        {
+          "callsign": "NAK500",
+          "description": "LFBR LFCR TO 52",
+          "time": "08:52"
+        },
+        {
+          "callsign": "FGULA",
+          "description": "PARA PAMIER contact passant FL120  'autorisation de larger au FL140?'",
+          "time": "08:19"
+        },
+        {
+          "callsign": "FMY8958",
+          "description": "LFDB LFCK *RADIO 1ier contact (2000ft stable) ' pour une prise en compte IFR vers LFCK' TMC 1000",
+          "time": "08:42"
+        }
+      ]
+    },
+    {
+      "role": "PILOTAE1",
+      "events": []
+    },
+    {
+      "role": "PILOTAE2",
+      "events": []
+    },
+    {
+      "role": "PILOTAW1",
+      "events": []
+    },
+    {
+      "role": "PILOTAW2",
+      "events": []
+    },
+    {
+      "role": "PILOTITM",
+      "events": []
+    },
+    {
+      "role": "PILOTSIV",
+      "events": []
+    }
+  ],
+  "properties": {
+    "configuration": "",
+    "description": "Para pamier FGULA sur le tableau FGIDS para Cahors sur le tableau\r\nOuverture des attentes\r\nversion pour DAL \r\n\r\nPC2 à partir de APPITM14M11 de PC1",
+    "duration": 180,
+    "start_date": "2024-06-18T08:00:00Z",
+    "objectives": "",
+    "name": "APPITM14L11PC DAL",
+    "traffic_density": 0,
+    "update_date": "2026-03-12T16:49:54Z",
+    "weather": "",
+    "flightCount": 70
+  },
+  "logsim": {
+    "id": "APPITM14L11PC_DAL",
+    "centre": "LFBO",
+    "terrain": "LFBO",
+    "position": "Pseudo-pilotes (ADJE, ADJW)",
+    "difficulte": "Non précisé",
+    "version": 1,
+    "categorie": "PC2",
+    "date_creation": "2024-06-18T08:00:00Z",
+    "date_modification": "2026-03-12T16:49:54Z",
+    "source_format": "simlog-natif-v1"
+  }
+}
