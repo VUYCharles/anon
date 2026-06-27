@@ -36,7 +36,7 @@
 </header>
 {% endif %}
 
-<main class="{{ 'login-wrap' if request.endpoint in ['login', 'choisir_role'] else 'container' }}">
+<main class="{{ 'login-wrap' if request.endpoint in ['login', 'choisir_role'] else 'container' }}{{ ' role-hero' if request.endpoint == 'choisir_role' }}">
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       <div class="flash-area">
