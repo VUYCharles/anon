@@ -7,3 +7,5 @@ data/simulations/*.bak.simlog
 __pycache__/
 *.pyc
 .env
+*.png
+lambda-qr.png
