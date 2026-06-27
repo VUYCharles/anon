@@ -1,4 +1,4 @@
-# Simlog — Gestionnaire de logs de simulation ATC
+# Gestionnaire de logs de simulation ATC
 
 Webapp de gestion des logs de simulations de contrôle aérien : catalogue,
 accès par aéroport et par rôle, remontée de tickets, édition centralisée.
@@ -9,19 +9,12 @@ accès par aéroport et par rôle, remontée de tickets, édition centralisée.
 docker compose up -d --build
 ```
 
-Puis ouvrir `http://<IP>:8080`
-
 ## Authentification
 
 **Un compte par aéroport.** On se connecte avec le code OACI de l'aéroport
 (`LFPG`, `LFBO`…), puis on choisit son rôle pour la session : **pilote** ou
 **instructeur**. Un compte `admin` séparé donne accès à tous les centres.
 
-| Compte  | Mot de passe (démo) | Accès |
-|---------|---------------------|-------|
-| `LFPG`  | `demo`              | Simulations de Paris-CDG, rôle au choix |
-| `LFBO`  | `demo`              | Simulations de Toulouse, rôle au choix |
-| `admin` | `demo`              | Tous les centres, édition JSON |
 
 > **Changer les mots de passe :** éditer `data/users.json`, remettre un champ
 > `password` en clair, redémarrer le conteneur. Le mot de passe est haché
