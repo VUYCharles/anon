@@ -6,8 +6,7 @@ services:
     ports:
       - "8080:5000"
     environment:
-      # À CHANGER en production : clé secrète des sessions
-      SECRET_KEY: "changez-moi-en-production"
+      - SECRET_KEY=${SECRET_KEY}
     volumes:
       # Persistance des données (simulations, tickets, audit) hors du conteneur
       - ./data:/app/data
